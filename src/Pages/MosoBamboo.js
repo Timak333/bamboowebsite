@@ -7,3 +7,4 @@ function MosoBamboo() {
         </div>
     );
 }
+export default MosoBamboo;
