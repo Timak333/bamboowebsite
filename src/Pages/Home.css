@@ -1,0 +1,24 @@
+@font-face {
+    font-family: 'Monterchi';
+    src: url("../assets/Fonts/Monterchi.ttf") format("truetype");
+}
+
+.backgroundImage {
+    height: 100vh;
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    position: relative;
+    padding: 20px
+}
+
+.backgroundContent {
+    font-family: 'Monterchi', sans-serif;
+    color: white;
+    text-align: center;
+    padding: 20px;
+    line-height: 1.5 rem;
+}
