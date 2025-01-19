@@ -1,8 +1,9 @@
 import React from 'react';
+import './About.css';
 
-function About() {
+const About = () => {
     return (
-        <div>
+        <div className="aboutBackground">
             <h1>Welcome to the about page</h1>
         </div>
     );

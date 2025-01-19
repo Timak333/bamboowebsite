@@ -4,9 +4,8 @@ import Navbar from './components/Navbar/Navbar';
 import Home from './Pages/Home';
 import About from './Pages/About';
 import Gallery from './Pages/Gallery';
-import Calculator from './Pages/Calculator';
+import EcoCalculator from './Pages/EcoCalculator';
 import MosoBamboo from './Pages/MosoBamboo';
-import ContactUs from './Pages/ContactUs';
 
 function App() {
   return (
@@ -16,9 +15,8 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/MosoBamboo" element={<MosoBamboo />} />
         <Route path="/Gallery" element={<Gallery />} />
-        <Route path="/Calculator" element={<Calculator />} />
+        <Route path="/EcoCalculator" element={<EcoCalculator />} />
         <Route path="/About" element={<About />} />
-        <Route path="/ContactUs" element={<ContactUs />} />
       </Routes>
     </Router>
   );

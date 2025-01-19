@@ -1,8 +1,9 @@
 import React from 'react';
+import './Gallery.css';
 
-function Gallery() {
+const Gallery = () => {
     return (
-        <div>
+        <div className="galleryBackground">
             <h1>Welcome to the gallery page</h1>
         </div>
     );

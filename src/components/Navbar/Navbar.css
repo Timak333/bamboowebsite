@@ -1,0 +1,48 @@
+/* @font-face {
+    font-family: 'Monterchi';
+    src: url("../assets/Fonts/Monterchi.ttf") format("truetype");
+} */
+.navbar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 20px 50px;
+    padding-right: 225px;
+    background: transparent;
+    margin-top: 20px;
+    z-index: 10;
+    box-sizing: border-box;
+}
+
+.navbar a {
+    text-decoration: none;
+    font-family: 'Monterchi', sans-serif;
+    color: white;
+    font-size: 2rem;
+    margin-left: 100px;
+    transition: color 0.3s ease;
+}
+
+.navbar a:hover {
+    color: #f1c40f;
+}
+
+.logo {
+    cursor: pointer;
+    position: absolute;
+    left: 50px;
+    height: 70px;
+    width: auto;
+    object-fit: contain;
+    /* margin-top: 5px; */
+}
+.navbar a.logoLink {
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+
+}

@@ -1,8 +1,9 @@
 import React from 'react';
+import './EcoCalculator.css';
 
-function Calculator() {
+const Calculator = () => {
     return (
-        <div>
+        <div className="calcBackground">
             <h1>Welcome to the calculator page</h1>
         </div>
     );

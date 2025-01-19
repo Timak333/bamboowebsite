@@ -1,8 +1,9 @@
 import React from 'react';
+import './MosoBamboo.css';
 
-function MosoBamboo() {
+const MosoBamboo = () => {
     return (
-        <div>
+        <div className="mosoBackground">
             <h1>Welcome to the Moso bamboo page</h1>
         </div>
     );

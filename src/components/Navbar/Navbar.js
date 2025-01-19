@@ -1,20 +1,19 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import './Navbar.css';
-
+import websiteLogo from '../../assets/Images/websiteLogo.png';
 const Navbar = () => {
     return (
-        <nav>
-            <ul>
-                <li><Link to="/">Home</Link></li>
-                <li><Link to="/MosoBamboo">Moso Bamboo</Link></li>
-                <li><Link to="/Gallery">Gallery</Link></li>
-                <li><Link to="/Calculator">Calculator</Link></li>
-                <li><Link to="/About">About</Link></li>
-                <li><Link to="/ContactUs">Contact Us</Link></li>
-            </ul>
+        <nav className="navbar">
+                <Link to="/" className="logoLink">
+                    <img src={websiteLogo} alt="Logo" className="logo" />
+                </Link>
+                <Link to="/">Home</Link>
+                <Link to="/MosoBamboo">Moso Bamboo</Link>
+                <Link to="/Gallery">Gallery</Link>
+                <Link to="/EcoCalculator">EcoCalculator</Link>
+                <Link to="/About">About</Link>
         </nav>
     )
 }
-
 export default Navbar;
