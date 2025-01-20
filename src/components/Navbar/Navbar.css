@@ -1,7 +1,3 @@
-/* @font-face {
-    font-family: 'Monterchi';
-    src: url("../assets/Fonts/Monterchi.ttf") format("truetype");
-} */
 .navbar {
     position: absolute;
     top: 0;
@@ -45,4 +41,46 @@
     display: flex;
     align-items: center;
 
+}
+
+.bm-burger-button {
+    display: none;
+}
+.bm-burger-bars {
+    background: white;
+}
+.bm-burgers-bars-hove {
+    background: #f1c40f;
+}
+.bm-menu {
+    background: rgba(0, 0, 0, 0.9);
+    padding: 2.5em 1.5em 0;
+    font-size: 1.15em;
+}
+.bm-item {
+    display: block;
+    padding: 0.5em;
+    color: white;
+    text-decoration: none;
+    font-family: 'Monterchi', sans-serif;
+    font-size: 1.5rem;
+}
+.bm-item:hover {
+    color: #f1c40f;
+}
+.bm-overlay {
+    background: rgba(0, 0, 0, 0.7);
+}
+
+@media screen and (max-width: 768px) {
+    .navbar a {
+        display: none;
+    }
+    .bm-burger-button {
+        display: block;
+        position: absolute;
+        right: 50px;
+        top: 25px;
+    }
+    
 }
