@@ -13,6 +13,12 @@ const Navbar = () => {
     }
     return (
         <>
+            {/* Toggle Navigation for mobile} */}
+            <div className="toggleBtn">
+                <button onClick={toggleNavBar} style={{ color:'black'}}>
+                    {isOpen ? <CloseIcon /> : <MenuIcon />}
+                </button>
+            </div>
            <nav className="navbar">
             <Link to="/"><img src={webLogo} alt="Logo" className="logo" /></Link>
                 <div className="navbarLinks">
@@ -21,12 +27,6 @@ const Navbar = () => {
                 <Link to="/Gallery">Gallery</Link>
                 <Link to="/EcoCalculator">EcoCalculator</Link>
                 <Link to="/About">About</Link>
-                </div>
-                {/* Toggle Navigation for mobile} */}
-                <div className="toggleBtn">
-                    <button onClick={toggleNavBar} style={{ color:'black'}}>
-                        {isOpen ? <CloseIcon /> : <MenuIcon />}
-                    </button>
                 </div>
             </nav>
             {/* Mobile navigation links */}
