@@ -1,9 +1,9 @@
 import React, { useState} from 'react';
 import { Link } from 'react-router-dom';
 import './Navbar.css';
-import websiteLogo from '../../assets/Images/websiteLogo.png';
-import MenuIcon from '@material-ui/icons/Menu';
-import CloseIcon from '@material-ui/icons/Close';
+import webLogo from '../../assets/Images/webLogo.png';
+import MenuIcon from '@mui/icons-material/Menu';
+import CloseIcon from '@mui/icons-material/Close';
 
 const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false);
@@ -14,9 +14,7 @@ const Navbar = () => {
     return (
         <>
            <nav className="navbar">
-            <Link to="/" className="logoLink">
-                        <img src={websiteLogo} alt="Logo" className="logo" />
-                    </Link>
+            <Link to="/"><img src={webLogo} alt="Logo" className="logo" /></Link>
                 <div className="navbarLinks">
                 <Link to="/">Home</Link>
                 <Link to="/MosoBamboo">Moso Bamboo</Link>
@@ -24,22 +22,14 @@ const Navbar = () => {
                 <Link to="/EcoCalculator">EcoCalculator</Link>
                 <Link to="/About">About</Link>
                 </div>
-                {/* Navigtion for full desktop screen */}
-                <div className="navLinks">
-                    <Link to="/">Home</Link>
-                    <Link to="/MosoBamboo">Moso Bamboo</Link>
-                    <Link to="/Gallery">Gallery</Link>
-                    <Link to="/EcoCalculator">EcoCalculator</Link>
-                    <Link to="/About">About</Link>
-                </div>
                 {/* Toggle Navigation for mobile} */}
                 <div className="toggleBtn">
-                    <button onClick={toggleNavBar}>
+                    <button onClick={toggleNavBar} style={{ color:'black'}}>
                         {isOpen ? <CloseIcon /> : <MenuIcon />}
                     </button>
                 </div>
             </nav>
-            {/* Navigation for mobile */}
+            {/* Mobile navigation links */}
             {isOpen && (
                 <div className="mobileNavLinks">
                     <Link to="/" onClick={toggleNavBar}>Home</Link>
@@ -52,5 +42,4 @@ const Navbar = () => {
         </>
     );
 };
-
 export default Navbar;

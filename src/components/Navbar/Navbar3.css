@@ -1,0 +1,96 @@
+/* Navbar Container */
+.navbar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 2rem;
+    background-color: transparent;
+    z-index: 1000;
+    box-sizing: border-box;
+    padding-right: 225px;
+}
+
+.logo {
+    cursor: pointer;
+    height: 80px;
+    width: auto;
+    object-fit: contain;
+    /* margin-top: 5px; */
+}
+
+/* Desktop Navigation Links */
+.navbarLinks {
+    display: flex;
+    gap: 4rem;
+}
+
+.navbarLinks a {
+    text-decoration: none;
+    font-family: 'Monterchi', sans-serif;
+    color: black;
+    font-size: 2rem;
+    transition: color 0.3s ease;
+    /* margin-left: 30px; */
+}
+
+.navbarLinks a:hover {
+    color: #f1c40f; /* Gold hover color */
+}
+/* Mobile Toggle Button */
+.toggleBtn {
+    display: none; /* Hidden by default */
+}
+
+.toggleBtn button {
+    background: none;
+    border: none;
+    color: black;
+    font-size: 2rem;
+    cursor: pointer;
+}
+/* Mobile Navigation Links */
+.mobileNavLinks {
+    display: none;
+    flex-direction: column;
+    background-color: rgba(0, 0, 0, 0.9); /* Darker background */
+    padding: 1rem;
+    position: absolute;
+    top: 4rem;
+    right: 1rem;
+    z-index: 1001;
+    border-radius: 5px;
+}
+
+.mobileNavLinks a {
+    padding: 0.5rem 0;
+    text-decoration: none;
+    color: white;
+    font-size: 1rem;
+}
+
+.mobileNavLinks a:hover {
+    color: #f1c40f;
+}
+
+
+/* Responsive Behavior */
+@media screen and (max-width: 1024px) {
+    /* Desktop links hidden */
+    .navbarLinks {
+        display: none;
+    }
+
+    /* Mobile toggle button visible */
+    .toggleBtn {
+        display: block;
+    }
+
+    /* Mobile links visible when toggled */
+    .mobileNavLinks {
+        display: flex;
+    }
+}

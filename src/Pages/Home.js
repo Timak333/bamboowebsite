@@ -1,11 +1,11 @@
 import React from 'react';
 import './Home.css';
-import homeBackground2 from '../assets/Images/homeBackground2.png';
+import homeBackground3 from '../assets/Images/homeBackground3.png';
 // import websiteLogo from '../assets/Images/websiteLogo.png';
 
 const Home = () => {
     return (
-        <div className="backgroundImage" style={{ backgroundImage: `url(${homeBackground2})` }}>
+        <div className="backgroundImage" style={{ backgroundImage: `url(${homeBackground3})` }}>
             {/* <img src={websiteLogo} alt="Top Left" className="websiteLogo" /> */}
             <div className="backgroundContent">
             <h1>Green Promise</h1>
