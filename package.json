@@ -10,6 +10,7 @@
     "ajv": "^8.17.1",
     "ajv-keywords": "^5.1.0",
     "cra-template": "1.2.0",
+    "isexe": "^3.1.1",
     "react": "^19.0.0",
     "react-burger-menu": "^3.1.0",
     "react-dom": "^19.0.0",
