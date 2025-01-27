@@ -21,6 +21,10 @@
     object-fit: contain;
     /* margin-top: 5px; */
 }
+.logoPlaceholder {
+    width: auto;
+    height: 80px;
+}
 
 .navbarLinks {
     display: flex;

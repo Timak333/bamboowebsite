@@ -1,5 +1,5 @@
 import React, { useState} from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import './Navbar.css';
 import webLogo from '../../assets/Images/webLogo.png';
 import MenuIcon from '@mui/icons-material/Menu';
@@ -7,9 +7,18 @@ import CloseIcon from '@mui/icons-material/Close';
 
 const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false);
+    const location = useLocation();
 
     const toggleNavBar = () => {
         setIsOpen(!isOpen);
+    }
+    //hide logo
+    const hideLogoOnRoutes = ['/EcoCalculator', '/Gallery', '/MosoBamboo', '/About'];
+    const hideLogo = hideLogoOnRoutes.includes(location.pathname);
+    //hide navbar for ecocalculator
+    const hideNavBarOnRoutes = location.pathname.includes('/EcoCalculator');
+    if (hideNavBarOnRoutes) {
+        return null;
     }
     return (
         <>
@@ -20,7 +29,11 @@ const Navbar = () => {
                 </button>
             </div>
            <nav className="navbar">
+            {!hideLogo ? (
             <Link to="/"><img src={webLogo} alt="Logo" className="logo" /></Link>
+            ) : (
+                <div className="logoPlaceholder"></div>
+            )}
                 <div className="navbarLinks">
                 <Link to="/">Home</Link>
                 <Link to="/MosoBamboo">Moso Bamboo</Link>
