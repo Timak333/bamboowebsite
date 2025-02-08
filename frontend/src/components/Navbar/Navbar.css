@@ -1,0 +1,99 @@
+/* mustard */
+.navbar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    padding-right: 225px;
+    background: transparent;
+    z-index: 1000;
+    box-sizing: border-box;
+}
+
+.logo {
+    cursor: pointer;
+    height: 80px;
+    width: auto;
+    object-fit: contain;
+    /* margin-top: 5px; */
+}
+
+.navbarLinks {
+    display: flex;
+    gap: 4rem;
+}
+
+.navbarLinks a {
+    text-decoration: none;
+    font-family: 'Monterchi', sans-serif;
+    color: black;
+    font-size: 2rem;
+    transition: color 0.3s ease;
+    margin-left: 30px;
+}
+
+.navbar a:hover {
+    color: #f1c40f;
+}
+
+.toggleBtn {
+    display: none;
+    position: fixed;
+    top: 1rem;
+    right: 1rem;
+    z-index: 2000;
+}
+
+.toggleBtn button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 2rem;
+    color: black;
+    z-index: 2001;
+    position: relative;
+}
+
+.mobileNavLinks {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    top: 0;
+    right: 0;
+    height: 100vh;
+    width: 60%;
+    background-color: white;
+    z-index: 1000;
+    box-shadow: -2px 0px 5px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease-out;
+}
+
+.mobileNavLinks a {
+    /* padding: 0.5rem 0; */
+    font-family: 'Monterchi', sans-serif;
+    text-decoration: none;
+    color: black;
+    margin: 2rem 0;
+    font-size: 1.5rem;
+}
+.mobileNavLinks a:hover {
+    text-decoration: underline;
+}
+@media screen and (max-width: 1024px) {
+    .navbarLinks {
+        display: none
+    }
+    .toggleBtn {
+        display: block;
+    }
+    .mobileNavLinks {
+        display: flex;
+    }
+    
+}
