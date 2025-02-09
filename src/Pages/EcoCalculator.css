@@ -47,3 +47,13 @@
     text-transform: none;
     height: 45px;
 }
+
+.transportPercentageInput {
+    width: 55px;
+    height: 25px;
+}
+.transportPercentageInput input {
+    text-align: center;
+    padding: 5px;
+    font-size: 0.9rem;
+}

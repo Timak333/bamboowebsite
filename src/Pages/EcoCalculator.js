@@ -13,25 +13,59 @@ import {
     InputLabel,
     Select,
     ListItemText,
+    Checkbox,
+    // Tooltip,
  } from '@mui/material';
-import { Form } from 'react-router-dom';
-// import Grid from '@mui/material/Grid'
 
 const EcoCalculator = () => {
     const materials = ['Bamboo', 'Wood', 'Steel', 'Concrete']
     const locations = ['California', 'New York', 'Texas', 'Florida']
     const modeTransportation = ['Truck', 'Train', 'Ship', 'Plane']
     const energySources = ['Solar', 'Wind', 'Hydro', 'Nuclear']
-    const [selections, setSeletions] = useState({
+    const [selections, setSelections] = useState({
         materials: [],
         locations: [],
         transport: [],
         energy: [],
     });
+    //general handler for changes to materials, location and energy
     const handleSelectionChange = (event, type) => {
-        setSeletions({ ...selections, [type]: event.target.value });
+        setSelections({ ...selections, [type]: event.target.value });
     };
+    //keep track of selected modes of transport
+    const [selectedTransport, setSelectedTransport] = useState([]);
+    const [transportPercentages, setTransportPercentages] = useState({});
 
+    //add or remove transport mode from selectedTransport
+    const handleTransportSelection = (transport) => {
+        setSelectedTransport((prevSelected) => {
+            if (prevSelected.includes(transport)) {
+            //remove transport from selection
+            return prevSelected.filter((item) => item !== transport);
+        } else {
+            //add transport to selection
+            return [...prevSelected, transport];
+        }
+    });
+
+    //show percentage input if transport is selected
+    setTransportPercentages((prev) => {
+        const updatedPercentages = { ...prev };
+        if (selectedTransport.includes(transport)) {
+            delete updatedPercentages[transport];
+        } else {
+            updatedPercentages[transport] = "";
+        }
+        return updatedPercentages;
+    });
+    }
+    //handle percentage input changes
+    const handlePercentageChange = (event, transport) => {
+        setTransportPercentages((prev) => ({
+            ...prev,
+            [transport]: event.target.value,
+        }));
+    };
     return (
         <div className="backgroundImage" style={{ backgroundImage: `url(${vect3})` }}>
             <div className="ecoCalculatorContainer">
@@ -104,23 +138,29 @@ const EcoCalculator = () => {
                                 <Select
                                     label="Mode of Transportation"
                                     multiple
-                                    value={selections.transport}
-                                    onChange={(event) => handleSelectionChange(event, 'transport')}
+                                    value={selectedTransport}
                                     renderValue={(selected) => selected.join(', ')}
                                 >
-                                    {modeTransportation.map((transport) => (
-                                        <MenuItem
-                                            key={transport}
-                                            value={transport}
-                                            >
-                                            <ListItemText
-                                                primary={transport}
-                                                slotProps={{
-                                                    primary: {
-                                                        style: {fontWeight: selections.transport.indexOf(transport) > -1 ? 'bold' : 'normal' },
-                                                },
-                                                }}
-                                             />
+                                {modeTransportation.map((transport) => (
+                                    <MenuItem key={transport} value={transport}>
+                                        <Checkbox
+                                            checked={selectedTransport.includes(transport)}
+                                            onChange={() => handleTransportSelection(transport)}/>
+                                        <ListItemText primary={transport}/>
+                                        {selectedTransport.includes(transport) && (
+                                            // <Tooltip title="Specify the percentage for each mode of transportation" arrow>
+                                             <TextField
+                                                className="transportPercentageInput"
+                                                type="number"
+                                                placeholder="%"
+                                                value={transportPercentages[transport] || ""}
+                                                onChange={(event) => handlePercentageChange(event, transport)}
+                                                onClick={(event) => event.stopPropagation()}
+                                                onFocus={(event) => event.stopPropagation()}
+                                                slotProps={{ htmlInput: { min: 0, max: 100 } }}
+                                                />
+                                            // </Tooltip>
+                                            )}
                                         </MenuItem>
                                     ))}
                                 </Select>
