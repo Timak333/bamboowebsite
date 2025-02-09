@@ -30,13 +30,6 @@ CREATE TABLE transportation_modes (
     gwp_value REAL NOT NULL
 );
 
-CREATE TABLE materials (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    material_name TEXT NOT NULL,
-    material_form TEXT NOT NULL,
-    gwp_value REAL NOT NULL
-);
-
 CREATE TABLE concrete_insitu (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     "Concrete Type" TEXT NOT NULL,
@@ -55,4 +48,70 @@ CREATE TABLE concrete_precast (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     concrete_type TEXT NOT NULL,
     gwp_value REAL
+);
+
+CREATE TABLE steel (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    "Material Type" TEXT NOT NULL,
+    "Embodied Carbon kgCO2e/kg" REAL NOT NULL
+);
+
+CREATE TABLE timber (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    "Material Type" TEXT NOT NULL,
+    "Embodied Carbon kgCO2e/kg" REAL NOT NULL
+);
+
+CREATE TABLE glass (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    "Material Type" TEXT NOT NULL,
+    "Embodied Carbon kgCO2e/kg" REAL NOT NULL
+);
+
+CREATE TABLE aluminum (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    "Material Type" TEXT NOT NULL,
+    "Embodied Carbon kgCO2e/kg" REAL NOT NULL
+);
+
+CREATE TABLE ceramic (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    "Material Type" TEXT NOT NULL,
+    "Embodied Carbon kgCO2e/kg" REAL NOT NULL
+);
+
+CREATE TABLE clay_brick (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    "Material Type" TEXT NOT NULL,
+    "Embodied Carbon kgCO2e/kg" REAL NOT NULL
+);
+
+CREATE TABLE insulation (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    "Material Type" TEXT NOT NULL,
+    "Embodied Carbon kgCO2e/kg" REAL NOT NULL
+);
+
+CREATE TABLE plaster (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    "Material Type" TEXT NOT NULL,
+    "Embodied Carbon kgCO2e/kg" REAL NOT NULL
+);
+
+CREATE TABLE rubber (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    "Material Type" TEXT NOT NULL,
+    "Embodied Carbon kgCO2e/kg" REAL NOT NULL
+);
+
+CREATE TABLE vinyl (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    "Material Type" TEXT NOT NULL,
+    "Embodied Carbon kgCO2e/kg" REAL NOT NULL
+);
+
+CREATE TABLE bamboo (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    "Material Type" TEXT NOT NULL,
+    "Embodied Carbon kgCO2e/kg" REAL NOT NULL
 );
