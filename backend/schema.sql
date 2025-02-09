@@ -39,16 +39,16 @@ CREATE TABLE materials (
 
 CREATE TABLE concrete_insitu (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    concrete_type TEXT NOT NULL,
-    cemI REAL,
-    portland_limestone REAL,
-    natural_pozzolanic_ash REAL,
-    fly_ash_15 REAL,
-    fly_ash_30 REAL,
-    fly_ash_40 REAL,
-    blast_furnace_slag_25 REAL,
-    blast_furnace_slag_50 REAL,
-    blast_furnace_slag_70 REAL
+    "Concrete Type" TEXT NOT NULL,
+    "CEM I" REAL,
+    "Portland Limestone" REAL,
+    "Natural Pozzolanic Ash" REAL,
+    "Fly Ash 15%" REAL,
+    "Fly Ash 30%" REAL,
+    "Fly Ash 40%" REAL,
+    "Blast Furnace Slag 25%" REAL,
+    "Blast Furnace Slag 50%" REAL,
+    "Blast Furnace Slag 70%" REAL
 );
 
 CREATE TABLE concrete_precast (
