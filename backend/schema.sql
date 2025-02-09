@@ -2,7 +2,6 @@ DROP TABLE IF EXISTS material_location;
 DROP TABLE IF EXISTS project_destination;
 DROP TABLE IF EXISTS energy_sources;
 DROP TABLE IF EXISTS transportation_modes;
-DROP TABLE IF EXISTS materials;
 
 CREATE TABLE material_location (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
