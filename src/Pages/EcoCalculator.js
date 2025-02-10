@@ -22,11 +22,13 @@ const EcoCalculator = () => {
     const locations = ['California', 'New York', 'Texas', 'Florida']
     const modeTransportation = ['Truck', 'Train', 'Ship', 'Plane']
     const energySources = ['Solar', 'Wind', 'Hydro', 'Nuclear']
+    const destination = ['Arizona', 'New Mexico', 'Utah', 'Colorado']
     const [selections, setSelections] = useState({
         materials: [],
         locations: [],
         transport: [],
         energy: [],
+        destination: [],
     });
     //general handler for changes to materials, location and energy
     const handleSelectionChange = (event, type) => {
@@ -74,21 +76,21 @@ const EcoCalculator = () => {
                         <h1>EcoCalculator</h1>
                         <form className="ecoCalcForm">
                             <FormControl fullWidth>
-                                <InputLabel>Project Location</InputLabel>
+                                <InputLabel>Project Destination</InputLabel>
                                 <Select
-                                    label="Project Location"
+                                    label="Project Destination"
                                     multiple
-                                    value={selections.locations}
-                                    onChange={(event) => handleSelectionChange(event, 'locations')}
+                                    value={selections.destination}
+                                    onChange={(event) => handleSelectionChange(event, 'destination')}
                                     renderValue={(selected) => selected.join(', ')}
                                 >
                                     {locations.map((location) => (
                                         <MenuItem
-                                            key={location}
-                                            value={location}
+                                            key={destination}
+                                            value={destination}
                                             >
                                             <ListItemText
-                                                primary={location}
+                                                primary={destination}
                                                 slotProps={{
                                                     primary: {
                                                         style: {fontWeight: selections.locations.indexOf(location) > -1 ? 'bold' : 'normal' },
@@ -122,6 +124,33 @@ const EcoCalculator = () => {
                                                 },
                                                 }}
                                              />
+                                        </MenuItem>
+                                    ))}
+                                </Select>
+                            </FormControl>
+                            {/* dropdown for material location */}
+                            <FormControl fullWidth>
+                                <InputLabel>Material Location</InputLabel>
+                                <Select
+                                    label="Material Location"
+                                    multiple
+                                    value={selections.locations}
+                                    onChange={(event) => handleSelectionChange(event, 'locations')}
+                                    renderValue={(selected) => selected.join(', ')}
+                                >
+                                    {locations.map((location) => (
+                                        <MenuItem
+                                            key={location}
+                                            value={location}
+                                            >
+                                            <ListItemText
+                                                primary={location}
+                                                slotProps={{
+                                                    primary: {
+                                                        style: {fontWeight: selections.locations.indexOf(location) > -1 ? 'bold' : 'normal' },
+                                                },
+                                                }}
+                                                />
                                         </MenuItem>
                                     ))}
                                 </Select>
