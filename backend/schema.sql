@@ -25,8 +25,8 @@ CREATE TABLE energy_sources (
 
 CREATE TABLE transportation_modes (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    mode TEXT NOT NULL,
-    gwp_value REAL NOT NULL
+    Mode TEXT NOT NULL,
+    "CO2 Emissions (gCO₂/tkm)" REAL NOT NULL
 );
 
 CREATE TABLE concrete_insitu (
@@ -45,7 +45,7 @@ CREATE TABLE concrete_insitu (
 
 CREATE TABLE concrete_precast (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    concrete_type TEXT NOT NULL,
+    "Concrete Type" TEXT NOT NULL,
     gwp_value REAL
 );
 
