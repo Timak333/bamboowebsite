@@ -14,6 +14,7 @@ import {
     Select,
     ListItemText,
     Checkbox,
+    Autocomplete,
     // Tooltip,
  } from '@mui/material';
 
@@ -68,6 +69,11 @@ const EcoCalculator = () => {
             [transport]: event.target.value,
         }));
     };
+
+    // const handleAutoCompleteChange = (event, newValue, field) => {
+    //     setSelections({ ...selections, [field]: newValue });
+    // };
+
     return (
         <div className="backgroundImage" style={{ backgroundImage: `url(${vect3})` }}>
             <div className="ecoCalculatorContainer">
@@ -76,30 +82,16 @@ const EcoCalculator = () => {
                         <h1>EcoCalculator</h1>
                         <form className="ecoCalcForm">
                             <FormControl fullWidth>
-                                <InputLabel>Project Destination</InputLabel>
-                                <Select
-                                    label="Project Destination"
+                                <Autocomplete
                                     multiple
+                                    options={destination}
                                     value={selections.destination}
-                                    onChange={(event) => handleSelectionChange(event, 'destination')}
-                                    renderValue={(selected) => selected.join(', ')}
-                                >
-                                    {locations.map((location) => (
-                                        <MenuItem
-                                            key={destination}
-                                            value={destination}
-                                            >
-                                            <ListItemText
-                                                primary={destination}
-                                                slotProps={{
-                                                    primary: {
-                                                        style: {fontWeight: selections.locations.indexOf(location) > -1 ? 'bold' : 'normal' },
-                                                },
-                                                }}
-                                             />
-                                        </MenuItem>
-                                    ))}
-                                </Select>
+                                    onChange={(event, newValue) =>
+                                        setSelections({ ...selections, destination: newValue})}
+                                    renderInput={(params) => (
+                                        <TextField {...params} label="Project Destination"/>
+                                    )}
+                                />
                             </FormControl>
                             {/* dropdown for materials */}
                             <FormControl fullWidth>
@@ -130,30 +122,16 @@ const EcoCalculator = () => {
                             </FormControl>
                             {/* dropdown for material location */}
                             <FormControl fullWidth>
-                                <InputLabel>Material Location</InputLabel>
-                                <Select
-                                    label="Material Location"
+                                <Autocomplete
                                     multiple
+                                    options={locations}
                                     value={selections.locations}
-                                    onChange={(event) => handleSelectionChange(event, 'locations')}
-                                    renderValue={(selected) => selected.join(', ')}
-                                >
-                                    {locations.map((location) => (
-                                        <MenuItem
-                                            key={location}
-                                            value={location}
-                                            >
-                                            <ListItemText
-                                                primary={location}
-                                                slotProps={{
-                                                    primary: {
-                                                        style: {fontWeight: selections.locations.indexOf(location) > -1 ? 'bold' : 'normal' },
-                                                },
-                                                }}
-                                                />
-                                        </MenuItem>
-                                    ))}
-                                </Select>
+                                    onChange={(event, newValue) =>
+                                        setSelections({ ...selections, locations: newValue})}
+                                    renderInput={(params) => (
+                                        <TextField {...params} label="Material Location"/>
+                                    )}
+                                />
                             </FormControl>
                             {/* input for quantity */}
                             <TextField
