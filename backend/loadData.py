@@ -96,6 +96,11 @@ tables_to_load = [
         "sheet_name": "bamboo",
         "table_name": "bamboo",
         "columns": ["Material Type", "Embodied Carbon kgCO2e/kg"]
+    },
+        {
+        "sheet_name": "transportation_modes",
+        "table_name": "transportation_modes",
+        "columns": ["Mode", "CO2 Emissions (gCO₂/tkm)"]
     }
 ]
 
