@@ -46,7 +46,7 @@ CREATE TABLE concrete_insitu (
 CREATE TABLE concrete_precast (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     "Concrete Type" TEXT NOT NULL,
-    gwp_value REAL
+    "Embodied Carbon kgCO2e/kg" REAL NOT NULL
 );
 
 CREATE TABLE steel (
