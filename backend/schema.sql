@@ -20,7 +20,7 @@ CREATE TABLE project_destination (
 CREATE TABLE energy_sources (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     source TEXT NOT NULL,
-    gwp_value REAL NOT NULL
+    "CO2 pounds per kWh" REAL NOT NULL
 );
 
 CREATE TABLE transportation_modes (
