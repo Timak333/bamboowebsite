@@ -1,10 +1,70 @@
-.calcBackground {
-    background-color: darkgreen;
+.backgroundImage {
     height: 100vh;
-    width: 100%;
-    margin: 0;
-    padding: 0; 
+    background-size: 100% 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.ecoCalculatorContainer{
     display: flex;
     justify-content: center;
     align-items: center;
+    height: 90%;
+    width: 100%;
+}
+
+.ecoCalculatorContainer .ecoCalculatorCard {
+    background-color: white;
+    border-radius: 30px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    min-width: 650px;
+    max-width: 500px;
+    height: auto;
+    padding: 2rem 1rem;
+}
+
+.ecoCalculatorCard h1 {
+    font-size: 2rem;
+    font-family: Monterchi, sans-serif;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+.ecoCalcForm {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    align-items: center;
+}
+
+.ecoCalculatorCard .calculateButton {
+    background-color:green;
+    margin-top: 1.5rem;
+    margin: .5rem auto;
+    width: 150px;
+    display: block;
+    font-size: 1.4rem;
+    font-family: Monterchi, sans-serif;
+    border-radius: 15px;
+    text-transform: none;
+    height: 45px;
+}
+
+.transportPercentageInput {
+    width: 55px;
+    height: 25px;
+}
+.transportPercentageInput input {
+    text-align: center;
+    padding: 5px;
+    font-size: 0.9rem;
+}
+
+.customAutocomplete .MuiOutlinedInput-root {
+    border-radius: 4px;
+    height: 55px;
+}
+
+.customAutocomplete .MuiInputLabel-root {
+    top: -6px;
 }

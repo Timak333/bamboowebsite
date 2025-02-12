@@ -1,7 +1,6 @@
 import React from 'react';
 import './Home.css';
 import homeBackground3 from '../assets/Images/homeBackground3.png';
-// import websiteLogo from '../assets/Images/websiteLogo.png';
 
 const Home = () => {
     return (
