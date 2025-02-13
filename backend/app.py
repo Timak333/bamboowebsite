@@ -42,8 +42,8 @@ def get_energy_sources():
 #endpoint for transportation modes
 @app.route('/api/transportation_modes', methods=['GET'])
 def get_transportation_modes():
-    rows = query_database("SELECT mode FROM transportation_modes")
-    transportation_modes = [row[0] for row in rows]
+    rows = query_database("SELECT id, mode FROM transportation_modes")
+    transportation_modes = [{"id": row[0], "mode": row[1]} for row in rows]
     return jsonify(transportation_modes)
 
 if __name__ == '__main__':
