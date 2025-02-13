@@ -28,8 +28,8 @@ def get_material_locations():
 #endpoint for project destinations
 @app.route('/api/project_destinations', methods=['GET'])
 def get_project_destinations():
-    rows = query_database("SELECT city FROM project_destination")
-    destinations = [row[0] for row in rows]
+    rows = query_database("SELECT id, city FROM project_destination")
+    destinations = [{"id": row[0], "city": row[1]} for row in rows]
     return jsonify(destinations)
 
 #endpoint for energy sources
