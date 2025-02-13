@@ -39,13 +39,14 @@ const EcoCalculator = () => {
     //fetch data from backend
     useEffect(() => {
         fetchMaterialLocations().then(setLocations).catch((error) => console.error('Error fetching material locations:', error));
-        fetchProjectDestinations().then(setDestination).catch((error) => console.error('Error fetching project destinations:', error));
-        fetchTransportationModes()
+        fetchProjectDestinations()
             .then((data) => {
-                console.log("Fetched Transportation Modes:", data);
-                setModeTransportation(data);
+                console.log("Fetched Project Destinations:", data);
+                setDestination(data);
             })
-                .catch((error) => console.error("Error fetching transportation modes:", error));
+            .catch((error) => console.error('Error fetching project destinations:', error));
+
+        fetchTransportationModes().then(setModeTransportation).catch((error) => console.error('Error fetching transportation modes:', error));
         fetchEnergySources().then(setEnergySources).catch((error) => console.error('Error fetching energy sources:', error));
     }, []);
 
@@ -103,6 +104,11 @@ const EcoCalculator = () => {
                                     getOptionLabel={(option) => option.city}
                                     onChange={(event, newValue) =>
                                         setSelections({ ...selections, destination: newValue})}
+                                    renderOption={(props, option) => (
+                                        <li {...props} key={option.id}>
+                                            {option.city}
+                                        </li>
+                                    )}
                                     renderInput={(params) => (
                                         <TextField {...params} label="Project Destination"/>
                                     )}
