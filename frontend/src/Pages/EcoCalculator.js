@@ -1,6 +1,4 @@
-import React, { useState } from 'react';
-import EcoCalculatorBackground from '../assets/Images/EcoCalculatorBackground.png';
-import ecocalcbackground from '../assets/Images/ecocalcbackground.png';
+import React, { useState, useEffect } from 'react';
 import vect3 from '../assets/Images/vect3.jpg';
 import './EcoCalculator.css';
 import {
@@ -18,12 +16,19 @@ import {
     // Tooltip,
  } from '@mui/material';
 
+ import {
+    fetchEnergySources,
+    fetchMaterialLocations,
+    fetchProjectDestinations,
+    fetchTransportationModes,
+ } from '../components/apiCalls';
+
 const EcoCalculator = () => {
-    const materials = ['Bamboo', 'Wood', 'Steel', 'Concrete']
-    const locations = ['California', 'New York', 'Texas', 'Florida']
-    const modeTransportation = ['Truck', 'Train', 'Ship', 'Plane']
-    const energySources = ['Solar', 'Wind', 'Hydro', 'Nuclear']
-    const destination = ['Arizona', 'New Mexico', 'Utah', 'Colorado']
+    const [materials, setMaterials] = useState([]);
+    const [locations, setLocations] = useState([]);
+    const [destination, setDestination] = useState([]);
+    const [modeTransportation, setModeTransportation] = useState([]);
+    const [energySources, setEnergySources] = useState([]);
     const [selections, setSelections] = useState({
         materials: [],
         locations: [],
@@ -31,6 +36,19 @@ const EcoCalculator = () => {
         energy: [],
         destination: [],
     });
+    //fetch data from backend
+    useEffect(() => {
+        fetchMaterialLocations().then(setLocations).catch((error) => console.error('Error fetching material locations:', error));
+        fetchProjectDestinations().then(setDestination).catch((error) => console.error('Error fetching project destinations:', error));
+        fetchTransportationModes()
+            .then((data) => {
+                console.log("Fetched Transportation Modes:", data);
+                setModeTransportation(data);
+            })
+                .catch((error) => console.error("Error fetching transportation modes:", error));
+        fetchEnergySources().then(setEnergySources).catch((error) => console.error('Error fetching energy sources:', error));
+    }, []);
+
     //general handler for changes to materials, location and energy
     const handleSelectionChange = (event, type) => {
         setSelections({ ...selections, [type]: event.target.value });
@@ -40,24 +58,24 @@ const EcoCalculator = () => {
     const [transportPercentages, setTransportPercentages] = useState({});
 
     //add or remove transport mode from selectedTransport
-    const handleTransportSelection = (transport) => {
+    const handleTransportSelection = (transportMode) => {
         setSelectedTransport((prevSelected) => {
-            if (prevSelected.includes(transport)) {
+            if (prevSelected.includes(transportMode)) {
             //remove transport from selection
-            return prevSelected.filter((item) => item !== transport);
+            return prevSelected.filter((item) => item !== transportMode);
         } else {
             //add transport to selection
-            return [...prevSelected, transport];
+            return [...prevSelected, transportMode];
         }
     });
 
     //show percentage input if transport is selected
     setTransportPercentages((prev) => {
         const updatedPercentages = { ...prev };
-        if (selectedTransport.includes(transport)) {
-            delete updatedPercentages[transport];
+        if (selectedTransport.includes(transportMode)) {
+            delete updatedPercentages[transportMode];
         } else {
-            updatedPercentages[transport] = "";
+            updatedPercentages[transportMode] = "";
         }
         return updatedPercentages;
     });
@@ -69,10 +87,6 @@ const EcoCalculator = () => {
             [transport]: event.target.value,
         }));
     };
-
-    // const handleAutoCompleteChange = (event, newValue, field) => {
-    //     setSelections({ ...selections, [field]: newValue });
-    // };
 
     return (
         <div className="backgroundImage" style={{ backgroundImage: `url(${vect3})` }}>
@@ -86,6 +100,7 @@ const EcoCalculator = () => {
                                     multiple
                                     options={destination}
                                     value={selections.destination}
+                                    getOptionLabel={(option) => option.city}
                                     onChange={(event, newValue) =>
                                         setSelections({ ...selections, destination: newValue})}
                                     renderInput={(params) => (
@@ -125,6 +140,7 @@ const EcoCalculator = () => {
                                 <Autocomplete
                                     multiple
                                     options={locations}
+                                    getOptionLabel={(option) => option.city}
                                     value={selections.locations}
                                     onChange={(event, newValue) =>
                                         setSelections({ ...selections, locations: newValue})}
@@ -139,6 +155,12 @@ const EcoCalculator = () => {
                                 fullWidth
                                 margin="normal"
                             />
+                            {/* input for duration of project */}
+                            <TextField
+                                label="Duration of Project"
+                                fullWidth
+                                margin="normal"
+                            />
                             {/* dropdown for mode of transportation */}
                             <FormControl fullWidth>
                                 <InputLabel>Mode of Transportation</InputLabel>
@@ -146,27 +168,29 @@ const EcoCalculator = () => {
                                     label="Mode of Transportation"
                                     multiple
                                     value={selectedTransport}
-                                    renderValue={(selected) => selected.join(', ')}
+                                    renderValue={(selected) => selected.map((id) => {
+                                        const transport = modeTransportation.find((item) => item.id === id);
+                                        return transport ? transport.mode : '';
+                                    }).join(', ')}
                                 >
                                 {modeTransportation.map((transport) => (
-                                    <MenuItem key={transport} value={transport}>
+                                    <MenuItem key={transport.id} value={transport.id}>
                                         <Checkbox
-                                            checked={selectedTransport.includes(transport)}
-                                            onChange={() => handleTransportSelection(transport)}/>
-                                        <ListItemText primary={transport}/>
-                                        {selectedTransport.includes(transport) && (
+                                            checked={selectedTransport.includes(transport.id)}
+                                            onChange={() => handleTransportSelection(transport.id)}/>
+                                        <ListItemText primary={transport.mode}/>
+                                        {selectedTransport.includes(transport.id) && (
                                             // <Tooltip title="Specify the percentage for each mode of transportation" arrow>
                                              <TextField
                                                 className="transportPercentageInput"
                                                 type="number"
                                                 placeholder="%"
-                                                value={transportPercentages[transport] || ""}
-                                                onChange={(event) => handlePercentageChange(event, transport)}
+                                                value={transportPercentages[transport.id] || ""}
+                                                onChange={(event) => handlePercentageChange(event, transport.id)}
                                                 onClick={(event) => event.stopPropagation()}
                                                 onFocus={(event) => event.stopPropagation()}
                                                 slotProps={{ htmlInput: { min: 0, max: 100 } }}
                                                 />
-                                            // </Tooltip>
                                             )}
                                         </MenuItem>
                                     ))}
@@ -174,30 +198,17 @@ const EcoCalculator = () => {
                             </FormControl>
                             {/* input for energy sources */}
                             <FormControl fullWidth>
-                                <InputLabel>Energy Sources</InputLabel>
-                                <Select
-                                    label="Energy Sources"
+                                <Autocomplete
                                     multiple
+                                    options={energySources}
+                                    getOptionLabel={(option) => option.source}
                                     value={selections.energy}
-                                    onChange={(event) => handleSelectionChange(event, 'energy')}
-                                    renderValue={(selected) => selected.join(', ')}
-                                >
-                                    {energySources.map((energy) => (
-                                        <MenuItem
-                                            key={energy}
-                                            value={energy}
-                                            >
-                                            <ListItemText
-                                                primary={energy}
-                                                slotProps={{
-                                                    primary: {
-                                                        style: {fontWeight: selections.energy.indexOf(energy) > -1 ? 'bold' : 'normal' },
-                                                },
-                                                }}
-                                             />
-                                        </MenuItem>
-                                    ))}
-                                </Select>
+                                    onChange={(event, newValue) =>
+                                        setSelections({ ...selections, energy: newValue})}
+                                    renderInput={(params) => (
+                                        <TextField {...params} label="Energy Sources"/>
+                                    )}
+                                />
                             </FormControl>
                         </form>
                         <Button
