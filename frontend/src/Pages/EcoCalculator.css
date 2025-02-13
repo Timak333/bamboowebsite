@@ -60,11 +60,7 @@
     font-size: 0.9rem;
 }
 
-.customAutocomplete .MuiOutlinedInput-root {
-    border-radius: 4px;
-    height: 55px;
-}
-
-.customAutocomplete .MuiInputLabel-root {
-    top: -6px;
+.MuiListSubheader-root.materialsDropdownHeader  {
+    background-color: #f0f0f0;
+    font-weight: bold;
 }

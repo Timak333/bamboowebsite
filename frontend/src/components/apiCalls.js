@@ -24,3 +24,8 @@ export const fetchEnergySources = async () => {
     const response = await axios.get(`${BASE_URL}/energy_sources`);
     return response.data;
 };
+
+export const fetchMaterials = async () => {
+    const response = await axios.get(`${BASE_URL}/materials`);
+    return response.data;
+};

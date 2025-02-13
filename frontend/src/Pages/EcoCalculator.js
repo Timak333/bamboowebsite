@@ -13,7 +13,7 @@ import {
     ListItemText,
     Checkbox,
     Autocomplete,
-    // Tooltip,
+    ListSubheader,
  } from '@mui/material';
 
  import {
@@ -21,6 +21,7 @@ import {
     fetchMaterialLocations,
     fetchProjectDestinations,
     fetchTransportationModes,
+    fetchMaterials
  } from '../components/apiCalls';
 
 const EcoCalculator = () => {
@@ -36,16 +37,25 @@ const EcoCalculator = () => {
         energy: [],
         destination: [],
     });
+
+    //flattened materials array for Autocomplete
+    const [flattenedMaterials, setFlattenedMaterials] = useState([]);
     //fetch data from backend
     useEffect(() => {
         fetchMaterialLocations().then(setLocations).catch((error) => console.error('Error fetching material locations:', error));
-        fetchProjectDestinations()
-            .then((data) => {
-                console.log("Fetched Project Destinations:", data);
-                setDestination(data);
-            })
-            .catch((error) => console.error('Error fetching project destinations:', error));
-
+        // fetchMaterials().then(setMaterials).catch((error) => console.error('Error fetching materials:', error));
+        fetchMaterials().then((data) => {
+            console.log("Fetched materials:", data);
+            setMaterials(data);
+            const flattened = data.flatMap((group) =>
+            group?.materials?.map((material) => ({
+                category: group?.category,
+                material: material
+            }))
+            );
+            setFlattenedMaterials(flattened)
+        }).catch((error) => console.error('Error fetching materials:', error));
+        fetchProjectDestinations().then(setDestination).catch((error) => console.error('Error fetching project destinations:', error));
         fetchTransportationModes().then(setModeTransportation).catch((error) => console.error('Error fetching transportation modes:', error));
         fetchEnergySources().then(setEnergySources).catch((error) => console.error('Error fetching energy sources:', error));
     }, []);
@@ -115,31 +125,33 @@ const EcoCalculator = () => {
                                 />
                             </FormControl>
                             {/* dropdown for materials */}
-                            <FormControl fullWidth>
-                                <InputLabel>Materials</InputLabel>
-                                <Select
-                                    label="Materials"
+                            <FormControl fullWidth >
+                                <Autocomplete
                                     multiple
-                                    value={selections.materials}
-                                    onChange={(event) => handleSelectionChange(event, 'materials')}
-                                    renderValue={(selected) => selected.join(', ')}
-                                >
-                                    {materials.map((material) => (
-                                        <MenuItem
-                                            key={material}
-                                            value={material}
-                                            >
-                                            <ListItemText
-                                                primary={material}
-                                                slotProps={{
-                                                    primary: {
-                                                        style: {fontWeight: selections.materials.indexOf(material) > -1 ? 'bold' : 'normal' },
-                                                },
-                                                }}
-                                             />
-                                        </MenuItem>
-                                    ))}
-                                </Select>
+                                    options={flattenedMaterials}
+                                    groupBy={(option) => option.category}
+                                    getOptionLabel={(option) => option.material}
+                                    value={selections.materials.map((name) =>
+                                        flattenedMaterials.find((item) => item.material === name)
+                                        )}
+                                    onChange={(event, newValue) =>
+                                        setSelections({
+                                            ...selections,
+                                            materials: newValue.map((item) => item.material),
+                                        })
+                                    }
+                                    renderInput={(params) => (
+                                        <TextField {...params} label="Materials" variant="outlined"/>
+                                    )}
+                                    renderOption={(props, option) => (
+                                        <li {...props} key={option.material}>
+                                            {option.material}
+                                        </li>
+                                    )}
+                                    classes={{
+                                        groupLabel: 'materialsDropdownHeader',
+                                    }}
+                                    />
                             </FormControl>
                             {/* dropdown for material location */}
                             <FormControl fullWidth>

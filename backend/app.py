@@ -46,5 +46,31 @@ def get_transportation_modes():
     transportation_modes = [{"id": row[0], "mode": row[1]} for row in rows]
     return jsonify(transportation_modes)
 
+#endpoint for materials
+@app.route('/api/materials', methods=['GET'])
+def get_materials():
+    queries = [
+        ("Glass", 'SELECT "Material Type" FROM glass'),
+        ("Steel", 'SELECT "Material Type" FROM steel'),
+        ("Timber", 'SELECT "Material Type" FROM timber'),
+        ("Aluminum", 'SELECT "Material Type" FROM aluminum'),
+        ("Ceramic", 'SELECT "Material Type" FROM ceramic'),
+        ("Clay Brick", 'SELECT "Material Type" FROM clay_brick'),
+        ("Insulation", 'SELECT "Material Type" FROM insulation'),
+        ("Plaster", 'SELECT "Material Type" FROM plaster'),
+        ("Rubber", 'SELECT "Material Type" FROM rubber'),
+        ("Vinyl", 'SELECT "Material Type" FROM vinyl'),
+        ("Bamboo", 'SELECT "Material Type" FROM bamboo'),
+        ("Concrete Precast", 'SELECT "Concrete Type" FROM concrete_precast'),
+    ]
+    material_by_category = {}
+
+    for category, query in queries:
+        rows = query_database(query)
+        materials = [row[0] for row in rows]
+        material_by_category[category] = materials
+    response = [{"category": key, "materials": value} for key, value in material_by_category.items()]
+    return jsonify(response)
+
 if __name__ == '__main__':
     app.run(debug=True)
