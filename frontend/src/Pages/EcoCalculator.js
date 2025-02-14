@@ -14,6 +14,7 @@ import {
     Checkbox,
     Autocomplete,
     ListSubheader,
+    Menu,
  } from '@mui/material';
 
  import {
@@ -158,10 +159,15 @@ const EcoCalculator = () => {
                                 <Autocomplete
                                     multiple
                                     options={locations}
-                                    getOptionLabel={(option) => option.city}
                                     value={selections.locations}
+                                    getOptionLabel={(option) => option.city}
                                     onChange={(event, newValue) =>
                                         setSelections({ ...selections, locations: newValue})}
+                                    renderOption={(props, option) => (
+                                        <li {...props} key={option.id}>
+                                            {option.city}
+                                        </li>
+                                    )}
                                     renderInput={(params) => (
                                         <TextField {...params} label="Material Location"/>
                                     )}
@@ -216,17 +222,21 @@ const EcoCalculator = () => {
                             </FormControl>
                             {/* input for energy sources */}
                             <FormControl fullWidth>
-                                <Autocomplete
+                                <InputLabel>Energy Sources</InputLabel>
+                                <Select
+                                    label="Energy Sources"
                                     multiple
-                                    options={energySources}
-                                    getOptionLabel={(option) => option.source}
                                     value={selections.energy}
-                                    onChange={(event, newValue) =>
-                                        setSelections({ ...selections, energy: newValue})}
-                                    renderInput={(params) => (
-                                        <TextField {...params} label="Energy Sources"/>
-                                    )}
-                                />
+                                    onChange={(event) => setSelections({...selections, energy
+                                        :event.target.value})}
+                                    renderValue={(selected) => selected.join(', ')}
+                                >
+                                    {energySources.map((source) => (
+                                        <MenuItem key={source} value={source}>
+                                            {source}
+                                        </MenuItem>
+                                    ))}
+                                </Select>
                             </FormControl>
                         </form>
                         <Button

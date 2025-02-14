@@ -21,8 +21,8 @@ def query_database(query, params=()):
 #endpoint for material locations
 @app.route('/api/material_locations', methods=['GET'])
 def get_material_locations():
-    rows = query_database("SELECT city FROM material_location")
-    locations = [row[0] for row in rows]
+    rows = query_database("SELECT id, city FROM material_location")
+    locations = [{"id": row[0], "city": row[1]} for row in rows]
     return jsonify(locations)
 
 #endpoint for project destinations
