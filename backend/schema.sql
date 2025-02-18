@@ -32,15 +32,7 @@ CREATE TABLE transportation_modes (
 CREATE TABLE concrete_insitu (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     "Concrete Type" TEXT NOT NULL,
-    "CEM I" REAL,
-    "Portland Limestone" REAL,
-    "Natural Pozzolanic Ash" REAL,
-    "Fly Ash 15%" REAL,
-    "Fly Ash 30%" REAL,
-    "Fly Ash 40%" REAL,
-    "Blast Furnace Slag 25%" REAL,
-    "Blast Furnace Slag 50%" REAL,
-    "Blast Furnace Slag 70%" REAL
+    "Embodied Carbon kgCO2e/kg" REAL NOT NULL
 );
 
 CREATE TABLE concrete_precast (

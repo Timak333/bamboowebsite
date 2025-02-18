@@ -62,6 +62,7 @@ def get_materials():
         ("Vinyl", 'SELECT "Material Type" FROM vinyl'),
         ("Bamboo", 'SELECT "Material Type" FROM bamboo'),
         ("Concrete Precast", 'SELECT "Concrete Type" FROM concrete_precast'),
+        ("Concrete In-Situ", 'SELECT "Concrete Type" FROM concrete_insitu')
     ]
     material_by_category = {}
 
