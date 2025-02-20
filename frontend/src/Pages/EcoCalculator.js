@@ -135,12 +135,14 @@ const EcoCalculator = () => {
         event.preventDefault();
         console.log("Calculate button clicked! Sending data:", selections);
         try {
-            const response = await axios.post("http://localhost:5000/api/calculate_total_emissions", selections);
+            const response = await axios.post("http://localhost:5000/api/calculate_total_emissions", selections,
+            {headers: { "Content-Type": "applications/json"}});
+            console.log("Emissions response:", response.data);
             navigate("/results", { state: { emissionsData: response.data } });
         } catch (error) {
             console.error("Error calculating emissions:", error);
         }
-        }
+        };
 
     return (
         <div className="backgroundImage" style={{ backgroundImage: `url(${vect3})` }}>

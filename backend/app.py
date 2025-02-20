@@ -1,10 +1,10 @@
 from flask import Flask, jsonify, request
 from flask_cors import CORS
-from db_utils import query_database, get_distance_between_locations, get_material_carbon
+from db_utils import query_database, get_distance_between_locations, get_material_carbon, get_location_coordinates
 from calculations import calculate_energy_emissions, calculate_transport_emissions
 
 app = Flask(__name__)
-CORS(app, resources={r"/*": {"origins": "*"}})
+CORS(app, resources={r"/*": {"origins": "*"}}, supports_credentials=True)
 
 @app.route('/')
 def home():
@@ -65,8 +65,10 @@ def get_materials():
     response = [{"category": key, "materials": value} for key, value in material_by_category.items()]
     return jsonify(response)
 
-@app.route('/api/calculate_total_emissions', methods=['POST'])
+@app.route('/api/calculate_total_emissions', methods=['POST', 'OPTIONS'])
 def calculate_total_emissions_api():
+    if request.method == "OPTIONS":
+        return jsonify({"message": "CORS preflight success"}), 200
     data = request.json
     materials = data.get("materials", [])
     material_quantity = data.get("material_quantity", 0)
@@ -98,6 +100,11 @@ def calculate_total_emissions_api():
         "energy_emissions": total_energy_emissions,
         "total_emissions": total_emissions
     })
+
+@app.route('/api/test_coordinates', methods=['GET'])
+def test_coordinates():
+    lat, lon = get_location_coordinates("New York, United States", "material_location")
+    return jsonify({"latitude": lat, "longitude": lon})
 
 if __name__ == '__main__':
     app.run(debug=True)
