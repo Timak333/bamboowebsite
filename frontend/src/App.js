@@ -6,6 +6,7 @@ import About from './Pages/About';
 import Gallery from './Pages/Gallery';
 import EcoCalculator from './Pages/EcoCalculator';
 import MosoBamboo from './Pages/MosoBamboo';
+import ResultsPage from './Pages/ResultsPage';
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         <Route path="/Gallery" element={<Gallery />} />
         <Route path="/EcoCalculator" element={<EcoCalculator />} />
         <Route path="/About" element={<About />} />
+        <Route path="/results" element={<ResultsPage />} />
       </Routes>
     </Router>
   );

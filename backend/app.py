@@ -1,22 +1,14 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request
 from flask_cors import CORS
-import sqlite3
+from db_utils import query_database, get_distance_between_locations, get_material_carbon
+from calculations import calculate_energy_emissions, calculate_transport_emissions
 
 app = Flask(__name__)
-CORS(app)
+CORS(app, resources={r"/*": {"origins": "*"}})
 
 @app.route('/')
 def home():
     return jsonify({"message": "Backend working"})
-
-#utility function to query database
-def query_database(query, params=()):
-    conn = sqlite3.connect('database.db')
-    cursor = conn.cursor()
-    cursor.execute(query, params)
-    rows = cursor.fetchall()
-    conn.close()
-    return rows
 
 #endpoint for material locations
 @app.route('/api/material_locations', methods=['GET'])
@@ -72,6 +64,40 @@ def get_materials():
         material_by_category[category] = materials
     response = [{"category": key, "materials": value} for key, value in material_by_category.items()]
     return jsonify(response)
+
+@app.route('/api/calculate_total_emissions', methods=['POST'])
+def calculate_total_emissions_api():
+    data = request.json
+    materials = data.get("materials", [])
+    material_quantity = data.get("material_quantity", 0)
+    material_location = data.get("material_location")
+    project_destination = data.get("project_destination")
+    transport_modes = data.get("transport_modes", [])
+    transport_percentages = data.get("transport_percentages", {})
+    duration_days = data.get("duration_days")
+    energy_source = data.get("energy_source", [])
+
+    if not all([materials, material_location, project_destination,
+                material_quantity, transport_modes, duration_days, transport_percentages, energy_source]):
+        return jsonify({"error": "All fields required"}), 400
+    
+    total_material_emissions = sum(get_material_carbon(m["name"], m["category"]) for m in materials)
+    total_material_emissions *= material_quantity
+
+    distance_km = get_distance_between_locations(material_location, project_destination)
+    total_transport_emissions = sum(
+        calculate_transport_emissions(distance_km, mode) * (transport_percentages.get(mode, 100) / 100)
+        for mode in transport_modes
+    )
+    total_energy_emissions = sum(calculate_energy_emissions(duration_days, source) for source in energy_source)
+
+    total_emissions = total_material_emissions + total_transport_emissions + total_energy_emissions
+    return jsonify({
+        "material_emissions": total_material_emissions,
+        "transport_emissions": total_transport_emissions,
+        "energy_emissions": total_energy_emissions,
+        "total_emissions": total_emissions
+    })
 
 if __name__ == '__main__':
     app.run(debug=True)
