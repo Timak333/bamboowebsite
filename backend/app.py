@@ -103,8 +103,31 @@ def calculate_total_emissions_api():
 
 @app.route('/api/test_coordinates', methods=['GET'])
 def test_coordinates():
-    lat, lon = get_location_coordinates("New York, United States", "material_location")
+    lat, lon = get_location_coordinates("Los Angeles, CA", "project_destination")
     return jsonify({"latitude": lat, "longitude": lon})
+
+@app.route('/api/test_distance', methods=['GET'])
+def test_distance():
+    material_location = "New York, United States"
+    project_destination = "Los Angeles, CA"
+
+    # Get coordinates for both locations
+    lat1, lon1 = get_location_coordinates(material_location, "material_location")
+    lat2, lon2 = get_location_coordinates(project_destination, "project_destination")
+
+    # Debugging prints
+    print(f"📍 Material Location: {material_location} → ({lat1}, {lon1})")
+    print(f"📍 Project Destination: {project_destination} → ({lat2}, {lon2})")
+
+    if lat1 is None or lon1 is None or lat2 is None or lon2 is None:
+        print("❌ Error: One or both locations have null coordinates")
+        return jsonify({"error": "Invalid coordinates"}), 400
+
+    # Calculate distance
+    distance = get_distance_between_locations(material_location, project_destination)
+    print(f"📏 Calculated Distance: {distance} km")
+
+    return jsonify({"distance_km": distance})
 
 if __name__ == '__main__':
     app.run(debug=True)

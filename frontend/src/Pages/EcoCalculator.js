@@ -28,7 +28,7 @@ import {
 const EcoCalculator = () => {
     const navigate = useNavigate();
 
-    const [materials, setMaterials] = useState([]);
+    const [setMaterials] = useState([]);
     const [locations, setLocations] = useState([]);
     const [destination, setDestination] = useState([]);
     const [modeTransportation, setModeTransportation] = useState([]);
@@ -103,22 +103,24 @@ const EcoCalculator = () => {
     const handleTransportSelection = (transportMode) => {
         setSelections((prev) => {
             const updatedTransportModes = prev.transport_modes.includes(transportMode)
-                ? prev.transport_modes.filter((item) => item !== transportMode) // Remove if already selected
-                : [...prev.transport_modes, transportMode]; // Add if not selected
+                ? prev.transport_modes.filter((item) => item !== transportMode)
+                : [...prev.transport_modes, transportMode];
     
-            return { ...prev, transport_modes: updatedTransportModes };
+            // Update transport percentages inside selections
+            const updatedPercentages = { ...prev.transport_percentages };
+            if (prev.transport_modes.includes(transportMode)) {
+                delete updatedPercentages[transportMode];
+            } else {
+                updatedPercentages[transportMode] = "";
+            }
+    
+            return { 
+                ...prev, 
+                transport_modes: updatedTransportModes,
+                transport_percentages: updatedPercentages 
+            };
         });
-    //show percentage input if transport is selected
-    setTransportPercentages((prev) => {
-        const updatedPercentages = { ...prev };
-        if (selectedTransport.includes(transportMode)) {
-            delete updatedPercentages[transportMode];
-        } else {
-            updatedPercentages[transportMode] = "";
-        }
-        return updatedPercentages;
-    });
-    }
+    };
     //handle percentage input changes
     const handlePercentageChange = (event, transport) => {
         const value = event.target.value;
