@@ -33,7 +33,7 @@ def calculate_transport_emissions(distance, transport_mode):
     return distance * co2_per_tkm_kg
 
 def calculate_energy_emissions(duration_days, energy_source):
-    hours = duration_days * 24
+    hours = float(duration_days) * 24
     co2_per_kWh_lbs = get_energy_source_emission(energy_source)
     co2_per_kWh_kg = co2_per_kWh_lbs * 0.453592
     return co2_per_kWh_kg * hours 

@@ -132,11 +132,30 @@ const EcoCalculator = () => {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        console.log("Calculate button clicked! Sending data:", selections);
+        console.log("Raw selections before formatting:", selections);
+        
+        const formattedSelections = {
+            ...selections,
+            material_location: selections.material_location ? selections.material_location.city : "",
+            project_destination: selections.project_destination ? selections.project_destination.city : "",
+            materials: selections.materials.map((material) => {
+                if (typeof material === "string") {
+                    // Try to find the category dynamically from flattenedMaterials
+                    const matchedMaterial = flattenedMaterials.find(item => item.material === material);
+                    return {
+                        name: material,
+                        category: matchedMaterial ? matchedMaterial.category : "Unknown"
+                    };
+                }
+                return material; // If already in the correct format, return as is
+            })
+        };
+        console.log("Sending formatted data to backend:", JSON.stringify(formattedSelections, null, 2));
         try {
-            const response = await axios.post("/api/calculate_total_emissions", selections,
-            {headers: { "Content-Type": "applications/json"}});
+            const response = await axios.post("http://127.0.0.1:5000/api/calculate_total_emissions", formattedSelections,
+            {headers: { "Content-Type": "application/json"}});
             console.log("Emissions response:", response.data);
+
             navigate("/results", { state: { emissionsData: response.data } });
         } catch (error) {
             console.error("Error calculating emissions:", error);
@@ -152,12 +171,11 @@ const EcoCalculator = () => {
                         <form className="ecoCalcForm" onSubmit={handleSubmit}>
                             <FormControl fullWidth>
                                 <Autocomplete
-                                    multiple
                                     options={destination || []}
-                                    value={selections.project_destination || []}
+                                    value={selections.project_destination || null}
                                     getOptionLabel={(option) => option.city}
                                     onChange={(event, newValue) =>
-                                        setSelections({ ...selections, project_destination: newValue })}
+                                        setSelections({ ...selections, project_destination: newValue || null })}
                                     renderOption={(props, option) => (
                                         <li {...props} key={option.id}>
                                             {option.city}
@@ -199,12 +217,11 @@ const EcoCalculator = () => {
                             {/* dropdown for material location */}
                             <FormControl fullWidth>
                                 <Autocomplete
-                                    multiple
                                     options={locations || []}
-                                    value={selections.material_location || []}
+                                    value={selections.material_location || null}
                                     getOptionLabel={(option) => option.city}
                                     onChange={(event, newValue) =>
-                                        setSelections({ ...selections, material_location: newValue})}
+                                        setSelections({ ...selections, material_location: newValue || null})}
                                     renderOption={(props, option) => (
                                         <li {...props} key={option.id}>
                                             {option.city}
