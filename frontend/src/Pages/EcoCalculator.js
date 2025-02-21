@@ -28,7 +28,7 @@ import {
 const EcoCalculator = () => {
     const navigate = useNavigate();
 
-    const [setMaterials] = useState([]);
+    const [materials,setMaterials] = useState([]);
     const [locations, setLocations] = useState([]);
     const [destination, setDestination] = useState([]);
     const [modeTransportation, setModeTransportation] = useState([]);
@@ -43,9 +43,6 @@ const EcoCalculator = () => {
         energy_source: [],
         transport_percentages: {},
     });
-    //keep track of selected modes of transport
-    const [selectedTransport, setSelectedTransport] = useState([]);
-    const [transportPercentages, setTransportPercentages] = useState({});
     //flattened materials array for Autocomplete
     const [flattenedMaterials, setFlattenedMaterials] = useState([]);
 
@@ -137,7 +134,7 @@ const EcoCalculator = () => {
         event.preventDefault();
         console.log("Calculate button clicked! Sending data:", selections);
         try {
-            const response = await axios.post("http://localhost:5000/api/calculate_total_emissions", selections,
+            const response = await axios.post("/api/calculate_total_emissions", selections,
             {headers: { "Content-Type": "applications/json"}});
             console.log("Emissions response:", response.data);
             navigate("/results", { state: { emissionsData: response.data } });

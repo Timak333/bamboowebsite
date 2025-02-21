@@ -4,7 +4,7 @@ from db_utils import query_database, get_distance_between_locations, get_materia
 from calculations import calculate_energy_emissions, calculate_transport_emissions
 
 app = Flask(__name__)
-CORS(app, resources={r"/*": {"origins": "*"}}, supports_credentials=True)
+CORS(app, resources={r"/*": {"origins": "*"}})
 
 @app.route('/')
 def home():
@@ -65,10 +65,8 @@ def get_materials():
     response = [{"category": key, "materials": value} for key, value in material_by_category.items()]
     return jsonify(response)
 
-@app.route('/api/calculate_total_emissions', methods=['POST', 'OPTIONS'])
+@app.route('/api/calculate_total_emissions', methods=['POST'])
 def calculate_total_emissions_api():
-    if request.method == "OPTIONS":
-        return jsonify({"message": "CORS preflight success"}), 200
     data = request.json
     materials = data.get("materials", [])
     material_quantity = data.get("material_quantity", 0)
@@ -88,7 +86,7 @@ def calculate_total_emissions_api():
 
     distance_km = get_distance_between_locations(material_location, project_destination)
     total_transport_emissions = sum(
-        calculate_transport_emissions(distance_km, mode) * (transport_percentages.get(mode, 100) / 100)
+        calculate_transport_emissions(distance_km, mode) * (transport_percentages[mode] / 100)
         for mode in transport_modes
     )
     total_energy_emissions = sum(calculate_energy_emissions(duration_days, source) for source in energy_source)
@@ -100,34 +98,6 @@ def calculate_total_emissions_api():
         "energy_emissions": total_energy_emissions,
         "total_emissions": total_emissions
     })
-
-@app.route('/api/test_coordinates', methods=['GET'])
-def test_coordinates():
-    lat, lon = get_location_coordinates("Los Angeles, CA", "project_destination")
-    return jsonify({"latitude": lat, "longitude": lon})
-
-@app.route('/api/test_distance', methods=['GET'])
-def test_distance():
-    material_location = "New York, United States"
-    project_destination = "Los Angeles, CA"
-
-    # Get coordinates for both locations
-    lat1, lon1 = get_location_coordinates(material_location, "material_location")
-    lat2, lon2 = get_location_coordinates(project_destination, "project_destination")
-
-    # Debugging prints
-    print(f"📍 Material Location: {material_location} → ({lat1}, {lon1})")
-    print(f"📍 Project Destination: {project_destination} → ({lat2}, {lon2})")
-
-    if lat1 is None or lon1 is None or lat2 is None or lon2 is None:
-        print("❌ Error: One or both locations have null coordinates")
-        return jsonify({"error": "Invalid coordinates"}), 400
-
-    # Calculate distance
-    distance = get_distance_between_locations(material_location, project_destination)
-    print(f"📏 Calculated Distance: {distance} km")
-
-    return jsonify({"distance_km": distance})
 
 if __name__ == '__main__':
     app.run(debug=True)
