@@ -72,7 +72,6 @@ def calculate_total_emissions_api():
     material_quantity = data.get("material_quantity", 0)
     material_location = data.get("material_location", "")
     project_destination = data.get("project_destination", "")
-
     transport_modes = data.get("transport_modes", [])
     transport_percentages = data.get("transport_percentages", {})
     duration_days = data.get("duration_days")
@@ -81,7 +80,6 @@ def calculate_total_emissions_api():
     if not all([materials, material_location, project_destination,
                 material_quantity, transport_modes, duration_days, transport_percentages, energy_source]):
         return jsonify({"error": "All fields required"}), 400
-    
     total_material_emissions = sum(get_material_carbon(m["name"], m["category"]) for m in materials)
     total_material_emissions *= float(material_quantity)
 

@@ -48,47 +48,11 @@ const EcoCalculator = () => {
 
     //fetch data from backend
     useEffect(() => {
-        fetchMaterialLocations()
-            .then((data) => {
-                console.log("Material Locations Data:", data); // Debugging log
-                setLocations(data);
-            })
-            .catch((error) => console.error('Error fetching material locations:', error));
-    
-        fetchMaterials()
-            .then((data) => {
-                console.log("Materials Data:", data); // Debugging log
-                setMaterials(data);
-                const flattened = data.flatMap((group) =>
-                    group?.materials?.map((material) => ({
-                        category: group?.category,
-                        material: material
-                    }))
-                );
-                setFlattenedMaterials(flattened);
-            })
-            .catch((error) => console.error('Error fetching materials:', error));
-    
-        fetchProjectDestinations()
-            .then((data) => {
-                console.log("Project Destinations Data:", data); // Debugging log
-                setDestination(data);
-            })
-            .catch((error) => console.error('Error fetching project destinations:', error));
-    
-        fetchTransportationModes()
-            .then((data) => {
-                console.log("Transportation Modes Data:", data); // Debugging log
-                setModeTransportation(data);
-            })
-            .catch((error) => console.error('Error fetching transportation modes:', error));
-    
-        fetchEnergySources()
-            .then((data) => {
-                console.log("Energy Sources Data:", data); // Debugging log
-                setEnergySources(data);
-            })
-            .catch((error) => console.error('Error fetching energy sources:', error));
+        fetchMaterials().then(setMaterials).catch((error) => console.error('Error fetching materials:', error));
+        fetchMaterialLocations().then(setLocations).catch((error) => console.error('Error fetching material locations:', error));
+        fetchProjectDestinations().then(setDestination).catch((error) => console.error('Error fetching project destinations:', error));
+        fetchTransportationModes().then(setModeTransportation).catch((error) => console.error('Error fetching transportation modes:', error));
+        fetchEnergySources().then(setEnergySources).catch((error) => console.error('Error fetching energy sources:', error));
     }, []);
 
     //general handler for changes to materials, location and energy
@@ -102,22 +66,21 @@ const EcoCalculator = () => {
             const updatedTransportModes = prev.transport_modes.includes(transportMode)
                 ? prev.transport_modes.filter((item) => item !== transportMode)
                 : [...prev.transport_modes, transportMode];
-    
-            // Update transport percentages inside selections
+                //update trsport percentages inside selections
             const updatedPercentages = { ...prev.transport_percentages };
             if (prev.transport_modes.includes(transportMode)) {
                 delete updatedPercentages[transportMode];
             } else {
                 updatedPercentages[transportMode] = "";
             }
-    
-            return { 
-                ...prev, 
+            return {
+                ...prev,
                 transport_modes: updatedTransportModes,
-                transport_percentages: updatedPercentages 
+                transport_percentages: updatedPercentages
             };
         });
     };
+
     //handle percentage input changes
     const handlePercentageChange = (event, transport) => {
         const value = event.target.value;
@@ -130,37 +93,36 @@ const EcoCalculator = () => {
         }));
     };
 
+    //submit function for sending user info from input form to backend
     const handleSubmit = async (event) => {
         event.preventDefault();
         console.log("Raw selections before formatting:", selections);
-        
+        //formate selections for location input from list
         const formattedSelections = {
             ...selections,
             material_location: selections.material_location ? selections.material_location.city : "",
             project_destination: selections.project_destination ? selections.project_destination.city : "",
             materials: selections.materials.map((material) => {
                 if (typeof material === "string") {
-                    // Try to find the category dynamically from flattenedMaterials
                     const matchedMaterial = flattenedMaterials.find(item => item.material === material);
                     return {
                         name: material,
                         category: matchedMaterial ? matchedMaterial.category : "Unknown"
                     };
                 }
-                return material; // If already in the correct format, return as is
+                return material;
             })
         };
         console.log("Sending formatted data to backend:", JSON.stringify(formattedSelections, null, 2));
         try {
-            const response = await axios.post("http://127.0.0.1:5000/api/calculate_total_emissions", formattedSelections,
+            const response = await axios.post("http://127.0.1:5000/api/calculate_total_emissions", formattedSelections,
             {headers: { "Content-Type": "application/json"}});
             console.log("Emissions response:", response.data);
-
             navigate("/results", { state: { emissionsData: response.data } });
         } catch (error) {
             console.error("Error calculating emissions:", error);
         }
-        };
+    };
 
     return (
         <div className="backgroundImage" style={{ backgroundImage: `url(${vect3})` }}>

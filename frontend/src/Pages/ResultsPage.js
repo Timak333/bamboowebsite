@@ -23,7 +23,7 @@ const ResultsPage = () => {
                 <hr />
                 <h2><strong>Total emissions:</strong>{emissionsData.total_emissions.toFixed(2)} kg CO₂</h2>
             </div>
-            <button className="backButton" onClick={() => navigate("/")}>Go Back</button>
+            <button className="backButton" onClick={() => navigate("/")}>New Calculation</button>
         </div>
     );
 };
