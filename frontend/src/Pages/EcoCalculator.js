@@ -48,7 +48,19 @@ const EcoCalculator = () => {
 
     //fetch data from backend
     useEffect(() => {
-        fetchMaterials().then(setMaterials).catch((error) => console.error('Error fetching materials:', error));
+        fetchMaterials()
+            .then((data) => {
+                console.log("Materials Data:", data); // Debugging log
+                setMaterials(data);
+                const flattened = data.flatMap((group) =>
+                    group?.materials?.map((material) => ({
+                        category: group?.category,
+                        material: material
+                    }))
+                );
+                setFlattenedMaterials(flattened);
+            })
+            .catch((error) => console.error('Error fetching materials:', error));
         fetchMaterialLocations().then(setLocations).catch((error) => console.error('Error fetching material locations:', error));
         fetchProjectDestinations().then(setDestination).catch((error) => console.error('Error fetching project destinations:', error));
         fetchTransportationModes().then(setModeTransportation).catch((error) => console.error('Error fetching transportation modes:', error));
@@ -66,21 +78,22 @@ const EcoCalculator = () => {
             const updatedTransportModes = prev.transport_modes.includes(transportMode)
                 ? prev.transport_modes.filter((item) => item !== transportMode)
                 : [...prev.transport_modes, transportMode];
-                //update trsport percentages inside selections
+    
+            // Update transport percentages inside selections
             const updatedPercentages = { ...prev.transport_percentages };
             if (prev.transport_modes.includes(transportMode)) {
                 delete updatedPercentages[transportMode];
             } else {
                 updatedPercentages[transportMode] = "";
             }
-            return {
-                ...prev,
+    
+            return { 
+                ...prev, 
                 transport_modes: updatedTransportModes,
-                transport_percentages: updatedPercentages
+                transport_percentages: updatedPercentages 
             };
         });
     };
-
     //handle percentage input changes
     const handlePercentageChange = (event, transport) => {
         const value = event.target.value;

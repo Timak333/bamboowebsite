@@ -1,6 +1,7 @@
 import React from 'react';
 import { useLocation, useNavigate } from "react-router-dom";
 import './ResultPage.css';
+import resultsBackground from '../images/resultsBackground.jpg';
 
 const ResultsPage = () => {
     const location = useLocation();
@@ -14,6 +15,7 @@ const ResultsPage = () => {
         </div>
     }
     return (
+        <div className="backgroundImage" style={{ backgroundImage: `url(${resultsBackground})`}}>
         <div className="resultsContainer">
             <h1>Carbon Emission Results</h1>
             <div className="emissionsBox">
@@ -24,6 +26,7 @@ const ResultsPage = () => {
                 <h2><strong>Total emissions:</strong>{emissionsData.total_emissions.toFixed(2)} kg CO₂</h2>
             </div>
             <button className="backButton" onClick={() => navigate("/")}>New Calculation</button>
+        </div>
         </div>
     );
 };
