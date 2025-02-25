@@ -170,7 +170,7 @@ const EcoCalculator = () => {
                                     getOptionLabel={(option) => option.material}
                                     value={flattenedMaterials.filter((item) =>
                                         selections.materials.includes(item.material))}
-                                    onChange={(event, newValue) =>
+                                    onChange={(event, newValue) => 
                                         setSelections({
                                             ...selections,
                                             materials: newValue.map((item) => item.material),

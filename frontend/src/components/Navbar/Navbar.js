@@ -13,10 +13,10 @@ const Navbar = () => {
         setIsOpen(!isOpen);
     }
     //hide logo
-    const hideLogoOnRoutes = ['/EcoCalculator', '/Gallery', '/MosoBamboo', '/About'];
+    const hideLogoOnRoutes = ['/EcoCalculator', '/Gallery', '/MosoBamboo', '/About', '/results'];
     const hideLogo = hideLogoOnRoutes.includes(location.pathname);
     //hide navbar for ecocalculator
-    const hideNavBarOnRoutes = location.pathname.includes('/EcoCalculator');
+    const hideNavBarOnRoutes = ['/Ecocalculator','/results'].includes(location.pathname.toLowerCase());
     if (hideNavBarOnRoutes) {
         return null;
     }
