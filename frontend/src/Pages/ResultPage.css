@@ -18,9 +18,9 @@
     background-color: white;
     border-radius: 30px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-    min-width: 700px;
-    max-width: 500px;
-    height: 450px;
+    min-width: 650px;
+    max-width: 4500px;
+    height: 560px;
     padding: 2rem 1rem;
 }
 
@@ -36,7 +36,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: -250px;
+    margin-top: -40px;
 }
 
  .buttonContainer .newCalculationButton {
@@ -49,4 +49,10 @@
     font-family: Monterchi, sans-serif;
     border-radius: 15px;
     font-weight: bold;
+}
+
+.chartContainer {
+    width: 275px;
+    height: 300px;
+    margin: 20px auto;
 }
