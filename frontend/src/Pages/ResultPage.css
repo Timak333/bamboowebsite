@@ -20,7 +20,7 @@
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
     min-width: 650px;
     max-width: 4500px;
-    height: 560px;
+    height: 550px;
     padding: 2rem 1rem;
 }
 
@@ -45,7 +45,7 @@
     color: white;
     font-size: 16px;
     cursor: pointer;
-    padding: 15px 25px;
+    padding: 10px 15px;
     font-family: Monterchi, sans-serif;
     border-radius: 15px;
     font-weight: bold;

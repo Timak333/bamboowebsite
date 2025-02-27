@@ -4,9 +4,9 @@ import './ResultPage.css';
 import resultBackground from '../assets/Images/resultBackground.png';
 import { Button, Card, CardContent } from '@mui/material';
 import { Pie } from "react-chartjs-2";
-import { Chart as ChartJS, ArcElement, Tooltip } from "chart.js";
+import { Chart as ChartJS, ArcElement, Tooltip,Legend } from "chart.js";
 
-ChartJS.register(ArcElement, Tooltip);
+ChartJS.register(ArcElement, Tooltip, Legend);
 
 const ResultsPage = () => {
     const location = useLocation();
