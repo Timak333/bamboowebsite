@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
-import EcoCalculatorBackground from '../assets/Images/EcoCalculatorBackground.png';
-import ecocalcbackground from '../assets/Images/ecocalcbackground.png';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from "react-router-dom";
 import vect3 from '../assets/Images/vect3.jpg';
 import './EcoCalculator.css';
+import axios from 'axios';
 import {
     Card,
     CardContent,
@@ -15,64 +15,127 @@ import {
     ListItemText,
     Checkbox,
     Autocomplete,
-    // Tooltip,
  } from '@mui/material';
 
+ import {
+    fetchEnergySources,
+    fetchMaterialLocations,
+    fetchProjectDestinations,
+    fetchTransportationModes,
+    fetchMaterials
+ } from '../components/apiCalls';
+
 const EcoCalculator = () => {
-    const materials = ['Bamboo', 'Wood', 'Steel', 'Concrete']
-    const locations = ['California', 'New York', 'Texas', 'Florida']
-    const modeTransportation = ['Truck', 'Train', 'Ship', 'Plane']
-    const energySources = ['Solar', 'Wind', 'Hydro', 'Nuclear']
-    const destination = ['Arizona', 'New Mexico', 'Utah', 'Colorado']
+    const navigate = useNavigate();
+
+    const [materials,setMaterials] = useState([]);
+    const [locations, setLocations] = useState([]);
+    const [destination, setDestination] = useState([]);
+    const [modeTransportation, setModeTransportation] = useState([]);
+    const [energySources, setEnergySources] = useState([]);
     const [selections, setSelections] = useState({
         materials: [],
-        locations: [],
-        transport: [],
-        energy: [],
-        destination: [],
+        material_quantity: "",
+        material_location: "",
+        transport_modes: [],
+        duration_days: "",
+        project_destination: "",
+        energy_source: [],
+        transport_percentages: {},
     });
+    //flattened materials array for Autocomplete
+    const [flattenedMaterials, setFlattenedMaterials] = useState([]);
+
+    //fetch data from backend
+    useEffect(() => {
+        fetchMaterials()
+            .then((data) => {
+                console.log("Materials Data:", data); // Debugging log
+                setMaterials(data);
+                const flattened = data.flatMap((group) =>
+                    group?.materials?.map((material) => ({
+                        category: group?.category,
+                        material: material
+                    }))
+                );
+                setFlattenedMaterials(flattened);
+            })
+            .catch((error) => console.error('Error fetching materials:', error));
+        fetchMaterialLocations().then(setLocations).catch((error) => console.error('Error fetching material locations:', error));
+        fetchProjectDestinations().then(setDestination).catch((error) => console.error('Error fetching project destinations:', error));
+        fetchTransportationModes().then(setModeTransportation).catch((error) => console.error('Error fetching transportation modes:', error));
+        fetchEnergySources().then(setEnergySources).catch((error) => console.error('Error fetching energy sources:', error));
+    }, []);
+
     //general handler for changes to materials, location and energy
-    const handleSelectionChange = (event, type) => {
-        setSelections({ ...selections, [type]: event.target.value });
+    const handleSelectionChange = (event, field) => {
+        setSelections({ ...selections, [field]: event.target.value });
     };
-    //keep track of selected modes of transport
-    const [selectedTransport, setSelectedTransport] = useState([]);
-    const [transportPercentages, setTransportPercentages] = useState({});
 
     //add or remove transport mode from selectedTransport
-    const handleTransportSelection = (transport) => {
-        setSelectedTransport((prevSelected) => {
-            if (prevSelected.includes(transport)) {
-            //remove transport from selection
-            return prevSelected.filter((item) => item !== transport);
-        } else {
-            //add transport to selection
-            return [...prevSelected, transport];
-        }
-    });
-
-    //show percentage input if transport is selected
-    setTransportPercentages((prev) => {
-        const updatedPercentages = { ...prev };
-        if (selectedTransport.includes(transport)) {
-            delete updatedPercentages[transport];
-        } else {
-            updatedPercentages[transport] = "";
-        }
-        return updatedPercentages;
-    });
-    }
+    const handleTransportSelection = (transportMode) => {
+        setSelections((prev) => {
+            const updatedTransportModes = prev.transport_modes.includes(transportMode)
+                ? prev.transport_modes.filter((item) => item !== transportMode)
+                : [...prev.transport_modes, transportMode];
+    
+            // Update transport percentages inside selections
+            const updatedPercentages = { ...prev.transport_percentages };
+            if (prev.transport_modes.includes(transportMode)) {
+                delete updatedPercentages[transportMode];
+            } else {
+                updatedPercentages[transportMode] = "";
+            }
+    
+            return { 
+                ...prev, 
+                transport_modes: updatedTransportModes,
+                transport_percentages: updatedPercentages 
+            };
+        });
+    };
     //handle percentage input changes
     const handlePercentageChange = (event, transport) => {
-        setTransportPercentages((prev) => ({
+        const value = event.target.value;
+        setSelections((prev) => ({
             ...prev,
-            [transport]: event.target.value,
+            transport_percentages: {
+                ...prev.transport_percentages,
+                [transport]: value
+            }
         }));
     };
 
-    // const handleAutoCompleteChange = (event, newValue, field) => {
-    //     setSelections({ ...selections, [field]: newValue });
-    // };
+    //submit function for sending user info from input form to backend
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+        console.log("Raw selections before formatting:", selections);
+        //formate selections for location input from list
+        const formattedSelections = {
+            ...selections,
+            material_location: selections.material_location ? selections.material_location.city : "",
+            project_destination: selections.project_destination ? selections.project_destination.city : "",
+            materials: selections.materials.map((material) => {
+                if (typeof material === "string") {
+                    const matchedMaterial = flattenedMaterials.find(item => item.material === material);
+                    return {
+                        name: material,
+                        category: matchedMaterial ? matchedMaterial.category : "Unknown"
+                    };
+                }
+                return material;
+            })
+        };
+        console.log("Sending formatted data to backend:", JSON.stringify(formattedSelections, null, 2));
+        try {
+            const response = await axios.post("http://127.0.1:5000/api/calculate_total_emissions", formattedSelections,
+            {headers: { "Content-Type": "application/json"}});
+            console.log("Emissions response:", response.data);
+            navigate("/results", { state: { emissionsData: response.data } });
+        } catch (error) {
+            console.error("Error calculating emissions:", error);
+        }
+    };
 
     return (
         <div className="backgroundImage" style={{ backgroundImage: `url(${vect3})` }}>
@@ -80,54 +143,65 @@ const EcoCalculator = () => {
                 <Card className='ecoCalculatorCard'>
                     <CardContent>
                         <h1>EcoCalculator</h1>
-                        <form className="ecoCalcForm">
+                        <form className="ecoCalcForm" onSubmit={handleSubmit}>
                             <FormControl fullWidth>
                                 <Autocomplete
-                                    multiple
-                                    options={destination}
-                                    value={selections.destination}
+                                    options={destination || []}
+                                    value={selections.project_destination || null}
+                                    getOptionLabel={(option) => option.city}
                                     onChange={(event, newValue) =>
-                                        setSelections({ ...selections, destination: newValue})}
+                                        setSelections({ ...selections, project_destination: newValue || null })}
+                                    renderOption={(props, option) => (
+                                        <li {...props} key={option.id}>
+                                            {option.city}
+                                        </li>
+                                    )}
                                     renderInput={(params) => (
                                         <TextField {...params} label="Project Destination"/>
                                     )}
                                 />
                             </FormControl>
                             {/* dropdown for materials */}
-                            <FormControl fullWidth>
-                                <InputLabel>Materials</InputLabel>
-                                <Select
-                                    label="Materials"
+                            <FormControl fullWidth >
+                                <Autocomplete
                                     multiple
-                                    value={selections.materials}
-                                    onChange={(event) => handleSelectionChange(event, 'materials')}
-                                    renderValue={(selected) => selected.join(', ')}
-                                >
-                                    {materials.map((material) => (
-                                        <MenuItem
-                                            key={material}
-                                            value={material}
-                                            >
-                                            <ListItemText
-                                                primary={material}
-                                                slotProps={{
-                                                    primary: {
-                                                        style: {fontWeight: selections.materials.indexOf(material) > -1 ? 'bold' : 'normal' },
-                                                },
-                                                }}
-                                             />
-                                        </MenuItem>
-                                    ))}
-                                </Select>
+                                    options={flattenedMaterials || []}
+                                    groupBy={(option) => option.category}
+                                    getOptionLabel={(option) => option.material}
+                                    value={flattenedMaterials.filter((item) =>
+                                        selections.materials.includes(item.material))}
+                                    onChange={(event, newValue) => 
+                                        setSelections({
+                                            ...selections,
+                                            materials: newValue.map((item) => item.material),
+                                        })
+                                    }
+                                    renderInput={(params) => (
+                                        <TextField {...params} label="Materials" variant="outlined"/>
+                                    )}
+                                    renderOption={(props, option) => (
+                                        <li {...props} key={option.material}>
+                                            {option.material}
+                                        </li>
+                                    )}
+                                    classes={{
+                                        groupLabel: 'materialsDropdownHeader',
+                                    }}
+                                    />
                             </FormControl>
                             {/* dropdown for material location */}
                             <FormControl fullWidth>
                                 <Autocomplete
-                                    multiple
-                                    options={locations}
-                                    value={selections.locations}
+                                    options={locations || []}
+                                    value={selections.material_location || null}
+                                    getOptionLabel={(option) => option.city}
                                     onChange={(event, newValue) =>
-                                        setSelections({ ...selections, locations: newValue})}
+                                        setSelections({ ...selections, material_location: newValue || null})}
+                                    renderOption={(props, option) => (
+                                        <li {...props} key={option.id}>
+                                            {option.city}
+                                        </li>
+                                    )}
                                     renderInput={(params) => (
                                         <TextField {...params} label="Material Location"/>
                                     )}
@@ -135,8 +209,20 @@ const EcoCalculator = () => {
                             </FormControl>
                             {/* input for quantity */}
                             <TextField
-                                label="Quantity"
+                                label="Quantity (kg)"
                                 fullWidth
+                                type ="number"
+                                value={selections.material_quantity}
+                                onChange={(event) => handleSelectionChange (event, "material_quantity")}
+                                margin="normal"
+                            />
+                            {/* input for duration of project */}
+                            <TextField
+                                label="Duration of Project (days)"
+                                fullWidth
+                                type="number"
+                                value={selections.duration_days}
+                                onChange={(event) => handleSelectionChange (event, "duration_days")}
                                 margin="normal"
                             />
                             {/* dropdown for mode of transportation */}
@@ -145,28 +231,32 @@ const EcoCalculator = () => {
                                 <Select
                                     label="Mode of Transportation"
                                     multiple
-                                    value={selectedTransport}
-                                    renderValue={(selected) => selected.join(', ')}
+                                    value={selections.transport_modes || []}
+                                    onChange={(event) =>
+                                            setSelections({ ...selections,transport_modes: event.target.value })}   
+                                    renderValue={(selected) => selected.map((mode) => {
+                                        const transport = modeTransportation.find((item) => item.mode === mode);
+                                        return transport ? transport.mode : mode;
+                                    }).join(', ')}
                                 >
                                 {modeTransportation.map((transport) => (
-                                    <MenuItem key={transport} value={transport}>
+                                    <MenuItem key={transport.id} value={transport.mode}>
                                         <Checkbox
-                                            checked={selectedTransport.includes(transport)}
-                                            onChange={() => handleTransportSelection(transport)}/>
-                                        <ListItemText primary={transport}/>
-                                        {selectedTransport.includes(transport) && (
+                                            checked={selections.transport_modes.includes(transport.mode)}
+                                            onChange={() => handleTransportSelection(transport.mode)}/>
+                                        <ListItemText primary={transport.mode}/>
+                                        {selections.transport_modes.includes(transport.mode) && (
                                             // <Tooltip title="Specify the percentage for each mode of transportation" arrow>
                                              <TextField
                                                 className="transportPercentageInput"
                                                 type="number"
                                                 placeholder="%"
-                                                value={transportPercentages[transport] || ""}
-                                                onChange={(event) => handlePercentageChange(event, transport)}
+                                                value={selections.transport_percentages[transport.mode] || ""}
+                                                onChange={(event) => handlePercentageChange(event, transport.mode)}
                                                 onClick={(event) => event.stopPropagation()}
                                                 onFocus={(event) => event.stopPropagation()}
                                                 slotProps={{ htmlInput: { min: 0, max: 100 } }}
                                                 />
-                                            // </Tooltip>
                                             )}
                                         </MenuItem>
                                     ))}
@@ -178,23 +268,13 @@ const EcoCalculator = () => {
                                 <Select
                                     label="Energy Sources"
                                     multiple
-                                    value={selections.energy}
-                                    onChange={(event) => handleSelectionChange(event, 'energy')}
+                                    value={selections.energy_source}
+                                    onChange={(event) => handleSelectionChange(event, 'energy_source')}
                                     renderValue={(selected) => selected.join(', ')}
                                 >
-                                    {energySources.map((energy) => (
-                                        <MenuItem
-                                            key={energy}
-                                            value={energy}
-                                            >
-                                            <ListItemText
-                                                primary={energy}
-                                                slotProps={{
-                                                    primary: {
-                                                        style: {fontWeight: selections.energy.indexOf(energy) > -1 ? 'bold' : 'normal' },
-                                                },
-                                                }}
-                                             />
+                                    {energySources.map((source) => (
+                                        <MenuItem key={source} value={source}>
+                                            {source}
                                         </MenuItem>
                                     ))}
                                 </Select>
@@ -205,6 +285,7 @@ const EcoCalculator = () => {
                                 className="calculateButton"
                                 fullWidth
                                 type="submit"
+                                onClick={handleSubmit}
                             >
                                 Calculate
                             </Button>

@@ -39,7 +39,6 @@
 
 .ecoCalculatorCard .calculateButton {
     background-color:green;
-    margin-top: 1.5rem;
     margin: .5rem auto;
     width: 150px;
     display: block;
@@ -48,6 +47,7 @@
     border-radius: 15px;
     text-transform: none;
     height: 45px;
+    margin-top: 30px;
 }
 
 .transportPercentageInput {
@@ -60,11 +60,7 @@
     font-size: 0.9rem;
 }
 
-.customAutocomplete .MuiOutlinedInput-root {
-    border-radius: 4px;
-    height: 55px;
-}
-
-.customAutocomplete .MuiInputLabel-root {
-    top: -6px;
+.MuiListSubheader-root.materialsDropdownHeader  {
+    background-color: #f0f0f0;
+    font-weight: bold;
 }
