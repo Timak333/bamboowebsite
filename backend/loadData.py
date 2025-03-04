@@ -118,8 +118,5 @@ for table in tables_to_load:
         columns= table["columns"],
         )
     
-# excel_file = pd.ExcelFile(FILE_PATH)
-# print(f"Available sheets in {FILE_PATH}: {excel_file.sheet_names}")
-    
 conn.commit()
 conn.close()

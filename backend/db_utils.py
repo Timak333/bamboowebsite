@@ -24,24 +24,14 @@ def get_material_carbon(material_name, table_name):
     conn.close()
     return row[0] if row else 0
 
-# #function to get lat and long for a given location
-# def get_location_coordinates(location_name, table_name):
-#     conn = sqlite3.connect('database.db')
-#     cursor = conn.cursor()
-#     query = f"SELECT latitude, longitude FROM {table_name} WHERE city = ?"
-#     cursor.execute(query, (location_name,))
-#     row = cursor.fetchone()
-#     conn.close()
-#     return (row[0], row[1]) if row else (None, None)
 def get_location_coordinates(city, table_name):
-    """Retrieve latitude and longitude for a given city from the specified table."""
     query = f"SELECT latitude, longitude FROM {table_name} WHERE city = ?"
-    result = query_database(query, (city,))  # No stripping here
+    result = query_database(query, (city,))
 
     if result:
         return result[0]  # Return the first (latitude, longitude) tuple
     else:
-        print(f"❌ Error: No coordinates found for {city} in {table_name}")
+        print(f"Error: No coordinates found for {city} in {table_name}")
         return None, None  # Return None if no match is found
 
 #function to get emission for transportation mode
@@ -72,14 +62,6 @@ def get_energy_source_emission(source):
     conn.close()
     return row[0] if row else 0
 
-# def get_distance_between_locations(material_location, project_destination):
-#     from calculations import haversine
-#     lat1, lon1 = get_location_coordinates(material_location, "material_location")
-#     lat2, lon2 = get_location_coordinates(project_destination, "project_destination")
-#     if None in (lat1, lat2, lon1, lon2):
-#         return None
-#     return haversine(lat1, lat2, lon1, lon2)
-
 def get_distance_between_locations(material_location, project_destination):
     from calculations import haversine
     lat1, lon1 = get_location_coordinates(material_location, "material_location")
@@ -87,6 +69,6 @@ def get_distance_between_locations(material_location, project_destination):
 
     if None in (lat1, lon1, lat2, lon2):
         print(f"Error: Invalid coordinates for locations: {material_location}, {project_destination}")
-        return None  # Return None if any coordinates are missing
+        return None
 
     return haversine(lat1, lon1, lat2, lon2)
