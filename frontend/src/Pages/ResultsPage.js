@@ -5,14 +5,21 @@ import resultBackground from '../assets/Images/resultBackground.png';
 import { Button, Card, CardContent } from '@mui/material';
 import { Pie } from "react-chartjs-2";
 import { Chart as ChartJS, ArcElement, Tooltip,Legend } from "chart.js";
+import Cookies from "js-cookie";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 const ResultsPage = () => {
     const location = useLocation();
     const navigate = useNavigate();
-    const emissionsData = location.state?.emissionsData;
 
+    let emissionsData = location.state?.emissionsData;
+    if(!emissionsData) {
+        const savedData = Cookies.get("emissionsData");
+        if(savedData) {
+            emissionsData = JSON.parse(savedData);
+        }
+    }
     if(!emissionsData) {
         return (
             <div>
