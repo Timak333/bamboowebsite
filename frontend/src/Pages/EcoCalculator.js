@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import vect3 from '../assets/Images/vect3.jpg';
 import './EcoCalculator.css';
 import axios from 'axios';
+import Cookies from "js-cookie";
 import {
     Card,
     CardContent,
@@ -131,6 +132,7 @@ const EcoCalculator = () => {
             const response = await axios.post("http://127.0.1:5000/api/calculate_total_emissions", formattedSelections,
             {headers: { "Content-Type": "application/json"}});
             console.log("Emissions response:", response.data);
+            Cookies.set("emissionsData", JSON.stringify(response.data), { expires: 2 });
             navigate("/results", { state: { emissionsData: response.data } });
         } catch (error) {
             console.error("Error calculating emissions:", error);
