@@ -1,0 +1,24 @@
+.backgroundImage {
+    height: 100vh;
+    background-size: 100% 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.previousResultsContainer{
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 20px;
+    background: #f9f9f9;
+    box-shadow:0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.calculationsList {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 0;
+    list-style: none;
+    margin-top: 20px;
+}

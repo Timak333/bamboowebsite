@@ -131,8 +131,17 @@ const EcoCalculator = () => {
         try {
             const response = await axios.post("http://127.0.1:5000/api/calculate_total_emissions", formattedSelections,
             {headers: { "Content-Type": "application/json"}});
+
             console.log("Emissions response:", response.data);
-            Cookies.set("emissionsData", JSON.stringify(response.data), { expires: 2 });
+
+            let savesdCalculations = Cookies.get("emissionsData");
+            savesdCalculations = savesdCalculations ? JSON.parse(savesdCalculations) : [];
+            if(!Array.isArray(savesdCalculations)) {
+                savesdCalculations = [];
+            }
+            savesdCalculations.push(response.data);
+            Cookies.set("emissionsData", JSON.stringify(savesdCalculations), { expires: 2 });
+
             navigate("/results", { state: { emissionsData: response.data } });
         } catch (error) {
             console.error("Error calculating emissions:", error);
