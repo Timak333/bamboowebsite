@@ -159,8 +159,8 @@ const EcoCalculator = () => {
             <div className="ecoCalculatorContainer">
                 <Card className='ecoCalculatorCard'>
                     <CardContent>
-                        <h1>EcoCalculator</h1>
                         <form className="ecoCalcForm" onSubmit={handleSubmit}>
+                            <div className="ecoCalcSection">Material Emissions Calculator</div>
                             <FormControl fullWidth>
                                 <Autocomplete
                                     options={destination || []}
@@ -233,15 +233,6 @@ const EcoCalculator = () => {
                                 onChange={(event) => handleSelectionChange (event, "material_quantity")}
                                 margin="normal"
                             />
-                            {/* input for duration of project */}
-                            <TextField
-                                label="Duration of Project (days)"
-                                fullWidth
-                                type="number"
-                                value={selections.duration_days}
-                                onChange={(event) => handleSelectionChange (event, "duration_days")}
-                                margin="normal"
-                            />
                             {/* dropdown for mode of transportation */}
                             <FormControl fullWidth>
                                 <InputLabel>Mode of Transportation</InputLabel>
@@ -279,8 +270,10 @@ const EcoCalculator = () => {
                                     ))}
                                 </Select>
                             </FormControl>
+                            {/* input for duration of project */}
+                            <div className="ecoCalcSection">Energy Emissions Calculator</div>
                             {/* input for energy sources */}
-                            <FormControl fullWidth>
+                            <FormControl fullWidth className="uniformInput">
                                 <InputLabel>Energy Sources</InputLabel>
                                 <Select
                                     label="Energy Sources"
@@ -296,6 +289,14 @@ const EcoCalculator = () => {
                                     ))}
                                 </Select>
                             </FormControl>
+                            <TextField
+                                label="Duration of Project (days)"
+                                fullWidth
+                                type="number"
+                                value={selections.duration_days}
+                                onChange={(event) => handleSelectionChange (event, "duration_days")}
+                                margin="normal"
+                            />
                         </form>
                         <Button
                                 variant="contained"

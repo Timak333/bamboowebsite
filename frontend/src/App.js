@@ -20,7 +20,7 @@ function App() {
         <Route path="/EcoCalculator" element={<EcoCalculator />} />
         <Route path="/About" element={<About />} />
         <Route path="/results" element={<ResultsPage />} />
-        <Route path="/previousResults" element={<PreviousResults />} />
+        <Route path="/PreviousResults" element={<PreviousResults />} />
       </Routes>
     </Router>
   );
