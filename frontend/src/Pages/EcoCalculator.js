@@ -125,14 +125,17 @@ const EcoCalculator = () => {
                     };
                 }
                 return material;
-            })
+            }),
+            material_quantity: selections.material_quantity || "N/A",
+            duration_days: selections.duration_days || "N/A",
         };
         console.log("Sending formatted data to backend:", JSON.stringify(formattedSelections, null, 2));
         try {
             const response = await axios.post("http://127.0.1:5000/api/calculate_total_emissions", formattedSelections,
             {headers: { "Content-Type": "application/json"}});
 
-            console.log("Emissions response:", response.data);
+            const emissionsResponse = response.data;
+            console.log("Emissions response:", emissionsResponse);
 
             let savesdCalculations = Cookies.get("emissionsData");
             savesdCalculations = savesdCalculations ? JSON.parse(savesdCalculations) : [];
@@ -142,7 +145,10 @@ const EcoCalculator = () => {
             savesdCalculations.push(response.data);
             Cookies.set("emissionsData", JSON.stringify(savesdCalculations), { expires: 2 });
 
-            navigate("/results", { state: { emissionsData: response.data } });
+            navigate("/results", {
+                state: {
+                    emissionsData: emissionsResponse,
+                    userInput: formattedSelections } });
         } catch (error) {
             console.error("Error calculating emissions:", error);
         }
