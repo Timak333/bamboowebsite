@@ -36,12 +36,17 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: -40px;
+    margin-top: -5px;
+    width: 100%;
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+    gap: 50px
 }
 
- .buttonContainer .newCalculationButton {
+ .buttonContainer .newCalculationButton,
+ .buttonContainer .previousCalculationButton {
     background-color:green;
-    margin-top: 20px;
     color: white;
     font-size: 16px;
     cursor: pointer;
@@ -49,17 +54,8 @@
     font-family: Monterchi, sans-serif;
     border-radius: 15px;
     font-weight: bold;
-}
-.buttonContainer .previousCalculationsButton {
-    background-color:green;
-    margin-top: 20px;
-    color: white;
-    font-size: 16px;
-    cursor: pointer;
-    padding: 10px 15px;
-    font-family: Monterchi, sans-serif;
-    border-radius: 15px;
-    font-weight: bold;
+    width: 200px;
+    white-space: nowrap;
 }
 
 .chartContainer {

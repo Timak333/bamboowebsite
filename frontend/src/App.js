@@ -7,7 +7,7 @@ import Gallery from './Pages/Gallery';
 import EcoCalculator from './Pages/EcoCalculator';
 import MosoBamboo from './Pages/MosoBamboo';
 import ResultsPage from './Pages/ResultsPage';
-import PreviousResultsPage from './Pages/PreviousResultsPage';
+import PreviousResults from './Pages/PreviousResults';
 
 function App() {
   return (
@@ -20,7 +20,7 @@ function App() {
         <Route path="/EcoCalculator" element={<EcoCalculator />} />
         <Route path="/About" element={<About />} />
         <Route path="/results" element={<ResultsPage />} />
-        <Route path="/previousResults" element={<PreviousResultsPage />} />
+        <Route path="/previousResults" element={<PreviousResults />} />
       </Routes>
     </Router>
   );

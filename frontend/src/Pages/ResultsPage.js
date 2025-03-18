@@ -5,7 +5,6 @@ import resultBackground from '../assets/Images/resultBackground.png';
 import { Button, Card, CardContent } from '@mui/material';
 import { Pie } from "react-chartjs-2";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
-import Cookies from "js-cookie";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -17,13 +16,17 @@ const ResultsPage = () => {
     const [selectedResult, setSelectedResult] = useState(null);
 
     useEffect(() => {
-        let savedData = Cookies.get("emissionsData");
+        let savedData = sessionStorage.getItem("emissionsData");
         if (savedData) {
             const parsedData = JSON.parse(savedData);
             setPastCalculations(parsedData);
             setSelectedResult(location.state?.emissionsData || parsedData[parsedData.length - 1]);
         }
     }, [location.state]);
+
+    useEffect(() => {
+        sessionStorage.setItem("emissionsData", JSON.stringify(pastCalculations));
+    }, [pastCalculations]);
 
     if (!selectedResult) {
         return (
@@ -73,19 +76,17 @@ const ResultsPage = () => {
                 >
                     New Calculation
                 </Button>
-            </div>
             {pastCalculations.length > 1 && (
-                    <div className="buttonContainer">
-                        <Button
-                            variant="contained"
-                            onClick={() => navigate("/PreviousResults", { state: { pastCalculations } })}
-                            className="previousCalculationButton"
-                        >
-                            Previous Calculations
-                        </Button>
-                    </div>
+                <Button
+                    variant="contained"
+                    onClick={() => navigate("/PreviousResults", { state: { pastCalculations } })}
+                    className="previousCalculationButton"
+                >
+                    Previous Calculations
+                     </Button>       
                 )}
         </div>
+    </div>
     );
 }
 
