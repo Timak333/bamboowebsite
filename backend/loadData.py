@@ -7,7 +7,6 @@ conn = sqlite3.connect(DB_NAME)
 cursor = conn.cursor()
 
 #load data from excel into a specific table
-print("Starting loadData.py...")
 def load_excel_into_table(file_path, sheet_name, table_name, columns):
     try:
         data = pd.read_excel(file_path, sheet_name=sheet_name)
