@@ -271,7 +271,7 @@ const EcoCalculator = () => {
                                 </Select>
                             </FormControl>
                             {/* input for duration of project */}
-                            <div className="ecoCalcSection">Energy Emissions Calculator</div>
+                            <div className="ecoCalcSection">Construction Energy Emissions Calculator</div>
                             {/* input for energy sources */}
                             <FormControl fullWidth className="uniformInput">
                                 <InputLabel>Energy Sources</InputLabel>
