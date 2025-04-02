@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import vect3 from '../assets/Images/vect3.jpg';
 import './EcoCalculator.css';
 import axios from 'axios';
+import Cookies from "js-cookie";
 import {
     Card,
     CardContent,
@@ -124,14 +125,30 @@ const EcoCalculator = () => {
                     };
                 }
                 return material;
-            })
+            }),
+            material_quantity: selections.material_quantity || "N/A",
+            duration_days: selections.duration_days || "N/A",
         };
         console.log("Sending formatted data to backend:", JSON.stringify(formattedSelections, null, 2));
         try {
             const response = await axios.post("http://127.0.1:5000/api/calculate_total_emissions", formattedSelections,
             {headers: { "Content-Type": "application/json"}});
-            console.log("Emissions response:", response.data);
-            navigate("/results", { state: { emissionsData: response.data } });
+
+            const emissionsResponse = response.data;
+            console.log("Emissions response:", emissionsResponse);
+
+            let savesdCalculations = Cookies.get("emissionsData");
+            savesdCalculations = savesdCalculations ? JSON.parse(savesdCalculations) : [];
+            if(!Array.isArray(savesdCalculations)) {
+                savesdCalculations = [];
+            }
+            savesdCalculations.push(response.data);
+            Cookies.set("emissionsData", JSON.stringify(savesdCalculations), { expires: 2 });
+
+            navigate("/results", {
+                state: {
+                    emissionsData: emissionsResponse,
+                    userInput: formattedSelections } });
         } catch (error) {
             console.error("Error calculating emissions:", error);
         }
@@ -142,8 +159,8 @@ const EcoCalculator = () => {
             <div className="ecoCalculatorContainer">
                 <Card className='ecoCalculatorCard'>
                     <CardContent>
-                        <h1>EcoCalculator</h1>
                         <form className="ecoCalcForm" onSubmit={handleSubmit}>
+                            <div className="ecoCalcSection">Material Emissions Calculator</div>
                             <FormControl fullWidth>
                                 <Autocomplete
                                     options={destination || []}
@@ -216,15 +233,6 @@ const EcoCalculator = () => {
                                 onChange={(event) => handleSelectionChange (event, "material_quantity")}
                                 margin="normal"
                             />
-                            {/* input for duration of project */}
-                            <TextField
-                                label="Duration of Project (days)"
-                                fullWidth
-                                type="number"
-                                value={selections.duration_days}
-                                onChange={(event) => handleSelectionChange (event, "duration_days")}
-                                margin="normal"
-                            />
                             {/* dropdown for mode of transportation */}
                             <FormControl fullWidth>
                                 <InputLabel>Mode of Transportation</InputLabel>
@@ -262,8 +270,10 @@ const EcoCalculator = () => {
                                     ))}
                                 </Select>
                             </FormControl>
+                            {/* input for duration of project */}
+                            <div className="ecoCalcSection">Construction Energy Emissions Calculator</div>
                             {/* input for energy sources */}
-                            <FormControl fullWidth>
+                            <FormControl fullWidth className="uniformInput">
                                 <InputLabel>Energy Sources</InputLabel>
                                 <Select
                                     label="Energy Sources"
@@ -279,6 +289,14 @@ const EcoCalculator = () => {
                                     ))}
                                 </Select>
                             </FormControl>
+                            <TextField
+                                label="Duration of Project (days)"
+                                fullWidth
+                                type="number"
+                                value={selections.duration_days}
+                                onChange={(event) => handleSelectionChange (event, "duration_days")}
+                                margin="normal"
+                            />
                         </form>
                         <Button
                                 variant="contained"

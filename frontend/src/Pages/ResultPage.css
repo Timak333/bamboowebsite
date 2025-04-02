@@ -1,3 +1,4 @@
+
 .backgroundImage {
     height: 100vh;
     background-size: 100% 100%;
@@ -18,9 +19,10 @@
     background-color: white;
     border-radius: 30px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-    min-width: 650px;
-    max-width: 4500px;
+    width: 80%;
+    max-width: 650px;
     height: 550px;
+    margin: 0 auto;
     padding: 2rem 1rem;
 }
 
@@ -36,12 +38,18 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: -40px;
+    margin-top: -5px;
+    width: 100%;
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+    gap: 50px;
+    overflow: visible;
 }
 
- .buttonContainer .newCalculationButton {
+ .buttonContainer .newCalculationButton,
+ .buttonContainer .previousCalculationButton {
     background-color:green;
-    margin-top: 20px;
     color: white;
     font-size: 16px;
     cursor: pointer;
@@ -49,10 +57,99 @@
     font-family: Monterchi, sans-serif;
     border-radius: 15px;
     font-weight: bold;
+    width: 200px;
+    white-space: nowrap;
 }
 
 .chartContainer {
-    width: 275px;
-    height: 300px;
+    width: 80%;
+    max-width: 300px;
+    height: auto;
     margin: 20px auto;
+}
+
+.pastCalculations {
+    background-color: white;
+    border-radius: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    width: 600px;
+    max-width: 90%;
+    margin-top: 20px;
+    padding: 1.5rem;
+}
+
+.pastCalculations h2 {
+    text-align: center;
+    font-size: 22px;
+    margin-bottom: 15px;
+}
+
+.pastCalculations ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    max-height: 200px;
+    overflow-y: auto;
+    border-radius: 10px;
+}
+
+/* Styling for the list items */
+.pastCalculations li {
+    background-color: #f8f8f8;
+    padding: 10px;
+    margin: 5px 0;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.pastCalculations li:hover {
+    background-color: #e0e0e0;
+}
+
+/* Highlight selected calculation */
+.pastCalculations li.selected {
+    background-color: green;
+    color: white;
+}
+
+/*Media query for responsive design */
+@media (max-width: 768px) {
+    .resultsContainer {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 1rem;
+        height: auto;
+    }
+
+    .resultsContainer .emissionsBox {
+        width: 90%;
+        max-width: 90%;
+        padding: 1.5rem;
+        margin: 0.5rem auto;
+    }
+
+    .chartContainer {
+        width: 80%;
+        height: auto;
+        margin: 20px auto;
+    }
+
+    .buttonContainer {
+        flex-direction: column;
+        align-items: center;
+        max-width: 300px;
+        margin: 0 auto;
+        gap: 20px;
+    }
+
+    .buttonContainer .newCalculationButton,
+    .buttonContainer .previousCalculationButton {
+        width: 100%;
+        margin: 0 auto;
+        margin-top: -8px;
+    }
 }
