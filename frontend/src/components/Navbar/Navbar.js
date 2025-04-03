@@ -13,7 +13,7 @@ const Navbar = () => {
         setIsOpen(!isOpen);
     }
     //hide logo
-    const hideLogoOnRoutes = ['/EcoCalculator', '/Gallery', '/MosoBamboo', '/About', '/results'];
+    const hideLogoOnRoutes = ['/EcoCalculator', '/MosoBamboo', '/About', '/results'];
     const hideLogo = hideLogoOnRoutes.includes(location.pathname);
     //hide navbar for ecocalculator
     const hideNavBarOnRoutes = ['/EcoCalculator','/results', '/PreviousResults'].includes(location.pathname);
@@ -28,7 +28,7 @@ const Navbar = () => {
                     {isOpen ? <CloseIcon /> : <MenuIcon />}
                 </button>
             </div>
-           <nav className="navbar">
+           <nav className= {`navbar ${location.pathname === '/Gallery' ? 'galleryNavbar' : ''}`}>
             {!hideLogo ? (
             <Link to="/"><img src={webLogo} alt="Logo" className="logo" /></Link>
             ) : (
