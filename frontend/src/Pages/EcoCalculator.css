@@ -24,12 +24,15 @@
     padding: 2rem 1rem;
     overflow-y: auto;
 }
-
 .MuiAutocomplete-inputRoot[class*="MuiOutlinedInput-root"] {
-    max-height: 60px;
-    overflow: hidden;
-    flex-wrap: nowrap;
-    align-items: center;
+  flex-wrap: nowrap !important;
+  overflow-x: auto !important;
+  overflow-y: hidden;
+  white-space: nowrap;
+  max-height: 60px;
+  align-items: center;
+  padding: 10px;
+  box-sizing: border-box;
 }
 
 .MuiAutocomplete-tag {
@@ -121,77 +124,3 @@
         font-size: 1rem;
       }
 }
-
-  /* @media (max-width: 768px) {
-    .ecoCalculatorContainer {
-      padding: 1rem;
-      align-items: flex-start;
-    }
-  
-    .ecoCalculatorContainer .ecoCalculatorCard {
-        width: 100%;
-        height: 90vh;
-        padding: 1.5rem 1rem;
-        flex-direction: column;
-        justify-content: space-between;
-    }
-  
-    .ecoCalcForm {
-      grid-template-columns: 1fr;
-      gap: 1rem;
-    }
-  
-    .ecoCalcSection {
-      grid-column: span 1;
-      font-size: 1.1rem;
-      margin-top: 15px;
-    }
-  
-    .ecoCalculatorCard .calculateButton {
-      width: 100%;
-      font-size: 1.2rem;
-      height: 45px;
-      position: sticky;
-    }
-  
-    .MuiAutocomplete-tag {
-      max-width: 90px;
-    }
-  
-    .transportPercentageInput {
-      width: 45px;
-      height: 22px;
-    }
-  
-    .transportPercentageInput input {
-      font-size: 0.8rem;
-      padding: 4px;
-    }
-  }
-
-  @media (max-width: 480px) {
-    .ecoCalculatorContainer {
-      padding: 1rem;
-    }
-
-    .ecoCalcSection {
-      font-size: 1rem;
-    }
-  
-    .ecoCalculatorCard {
-      width: 100%;
-      padding: 1rem;
-    }
-  
-    .ecoCalculatorCard .calculateButton {
-      font-size: 1rem;
-    }
-  
-    .MuiAutocomplete-inputRoot[class*="MuiOutlinedInput-root"] {
-      font-size: 0.9rem;
-    }
-  
-    .MuiListSubheader-root.materialsDropdownHeader {
-      font-size: 0.9rem;
-    }
-  } */
