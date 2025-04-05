@@ -1,8 +1,3 @@
-@font-face {
-    font-family: 'Monterchi';
-    src: url("../assets/Fonts/Monterchi.ttf") format("truetype");
-}
-
 html, body {
     overflow: hidden;
     margin: 0;
@@ -18,7 +13,7 @@ html, body {
     }
 
 .backgroundContent {
-    font-family: 'Monterchi', sans-serif;
+    font-family: 'Cormorant Garamond', sans-serif;
     color: black;
     text-align: center;
     display: flex;
@@ -29,26 +24,21 @@ html, body {
 }
 
 .backgroundContent h1 {
-    font-size:  6rem;
+    font-size:  4.3rem;
     margin: 5px 0;
     font-weight: normal;
 }
 
 .backgroundContent p {
-    font-size: 2rem;
+    font-size: 1.5rem;
     margin: 5px 0;
 }
 
-.scrollDown {
-    margin-top: 20px;
-    font-size: 1.5rem;
-} 
 .logo {
     cursor: pointer;
     height: 80px;
     width: auto;
     object-fit: contain;
-    /* margin-top: 5px; */
 }
 
 .fallingBamboo {

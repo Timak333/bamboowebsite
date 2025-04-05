@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import bamboGallery from '../assets/Images/bamboGallery.png';
+import swayingBamboo1 from '../assets/Images/swayingBamboo1.png';
 import './Gallery.css';
 
 const swayVariant= {
@@ -20,14 +20,14 @@ const Gallery = () => {
             <div className="backgroundContent">
             <h1>Welcome to the gallery page</h1>
             <motion.img
-                src={bamboGallery}
+                src={swayingBamboo1}
                 alt="Bamboo"
                 className="framerSway bottomLeft"
                 variants={swayVariant}
                 animate="animate"
             />
             <motion.img
-                src={bamboGallery}
+                src={swayingBamboo1}
                 alt="Bamboo"
                 className="framerSway bottomRight"
                 variants={swayVariant}
