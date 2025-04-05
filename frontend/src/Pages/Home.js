@@ -1,4 +1,4 @@
-import React, { useState, useEffect, use } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import './Home.css';
 import homeBackground3 from '../assets/Images/homeBackground3.png';
@@ -46,9 +46,9 @@ const Home = () => {
             </div>
             <div className="backgroundContent">
             <h1>Green Promise</h1>
-            <p>Lorem Ipsum Filler</p>
-            <p>Best experienced with sound</p>
-            <div className="scrollDown">Scroll down for more</div>
+            <p>A senior project submitted in partial fulfillment of the requirements</p>
+            <p>for a Bachelor of Arts degree in Computing and the Arts: Architecture,</p>
+            <p>April <span class="numbers">2025</span>, Yale University.</p>
         </div>
         </div>
     );
