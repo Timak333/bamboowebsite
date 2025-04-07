@@ -1,5 +1,8 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> feature/Animations
 html, body {
     overflow: hidden;
     margin: 0;
@@ -57,5 +60,9 @@ html, body {
     position: absolute;
     height: auto;
     opacity: 0.8;
+<<<<<<< HEAD
+}
+>>>>>>> feature/Animations
+=======
 }
 >>>>>>> feature/Animations
