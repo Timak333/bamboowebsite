@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-=======
 import React from 'react';
 import { motion } from 'framer-motion';
 import swayingBamboo1 from '../assets/Images/swayingBamboo1.png';
@@ -40,4 +38,3 @@ const Gallery = () => {
     );
 }
 export default Gallery;
->>>>>>> feature/Animations
