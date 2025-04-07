@@ -115,7 +115,7 @@ const ResultsPage = () => {
                     onClick={() => navigate("/PreviousResults", { state: { pastCalculations } })}
                     className="previousCalculationButton"
                 >
-                    Previous Calculations
+                    Previous Results
                      </Button>       
                 )}
         </div>
