@@ -1,0 +1,48 @@
+.cardContainer {
+    perspective: 1000px;
+    width: 300px;
+    height: 200px;
+    margin: 20px;
+    cursor: pointer;
+}
+
+.card {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+.cardFace {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    display: flex;
+    overflow: hidden;
+    align-items: center;
+    justify-content: center;
+}
+
+.cardFront {
+    background-color: #fff;
+}
+
+.cardBack {
+    background-color: #f0f0f0;
+    transform: rotateY(180deg);
+    padding: 20px;
+    text-align: center;
+}
+
+.cardImage {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.cardText {
+    font-size: 16px;
+    padding: 10px;
+}
