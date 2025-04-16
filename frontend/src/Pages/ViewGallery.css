@@ -1,0 +1,10 @@
+.galleryContainer {
+    padding: 40px;
+    text-align: center;
+    background-color: #f0f0f0;
+}
+
+.slick-slide {
+    display: flex;
+    justify-content: center;
+}
