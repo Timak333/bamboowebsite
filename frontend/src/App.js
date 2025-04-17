@@ -22,7 +22,7 @@ function App() {
         <Route path="/About" element={<About />} />
         <Route path="/results" element={<ResultsPage />} />
         <Route path="/PreviousResults" element={<PreviousResults />} />
-        <Route path="/PreviousResults" element={<ViewGallery />} />
+        <Route path="/ViewGallery" element={<ViewGallery />} />
       </Routes>
     </Router>
   );

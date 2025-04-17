@@ -1,10 +1,19 @@
 .galleryContainer {
-    padding: 40px;
+    padding: 100px;
     text-align: center;
-    background-color: #f0f0f0;
+    background-color: white;
+    min-height: 100vh;
 }
 
 .slick-slide {
     display: flex;
     justify-content: center;
+    align-items: center;
+}
+
+.cardContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
 }
