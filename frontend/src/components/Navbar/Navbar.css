@@ -93,6 +93,10 @@
     margin-right: -10rem;
 }
 
+.viewGalleryNavbar .navbarLinks {
+    margin-right: -10rem;
+}
+
 @media screen and (max-width: 1024px) {
     .navbarLinks {
         display: none

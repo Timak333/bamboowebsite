@@ -29,6 +29,7 @@ const Navbar = () => {
                 </button>
             </div>
            <nav className= {`navbar ${location.pathname === '/Gallery' ? 'galleryNavbar' : ''}`}>
+            
             {!hideLogo ? (
             <Link to="/"><img src={webLogo} alt="Logo" className="logo" /></Link>
             ) : (

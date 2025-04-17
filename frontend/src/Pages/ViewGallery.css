@@ -1,8 +1,10 @@
 .galleryContainer {
+    position: relative;
     padding: 100px;
     text-align: center;
     background-color: white;
-    min-height: 100vh;
+    max-width: 100%;
+    margin: auto;
 }
 
 .slick-slide {
@@ -11,9 +13,19 @@
     align-items: center;
 }
 
-.cardContainer {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: wrap;
+.prevArrow, .nextArrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 2;
+    cursor: pointer;
+    color: #333;
+}
+
+.prevArrow {
+    left: -30px;
+}
+
+.nextArrow {
+    right: -30px;
 }

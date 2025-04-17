@@ -5,6 +5,20 @@ import GalleryData from '../assets/Data/GalleryData';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import './ViewGallery.css';
+import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+
+const NextArrow = ({ onClick }) => (
+    <div className="arrowNext" onClick={onClick}>
+        <ArrowForwardIosIcon />
+    </div>
+)
+
+const PrevArrow = ({ onClick }) => (
+    <div className="arrowPrev" onClick={onClick}>
+        <ArrowBackIosIcon />
+    </div>
+)
 
 const ViewGallery = () => {
     const settings = {
@@ -13,6 +27,8 @@ const ViewGallery = () => {
         speed: 500,
         slidesToShow: 1,
         slidesToScroll: 1,
+        nextArrow: <NextArrow />,
+        prevArrow: <PrevArrow />,
         responsive: [
             {
                 breakpoint: 768,
