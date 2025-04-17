@@ -1,7 +1,7 @@
 import React from 'react';
 import Slider from 'react-slick';
-import Flipcard from '../components/Flipcard';
-import galleryData from '../data/GalleryData';
+import Flipcard from '../components/Flipcard.js';
+import GalleryData from '../assets/Data/GalleryData';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import './ViewGallery.css';

@@ -39,3 +39,33 @@
     bottom: -45px;
     padding-right: -10px;
 }
+
+.buttonContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 30px;
+    width: 100%;
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+    gap: 50px;
+}
+
+.viewButton {
+    background-color: green !important;
+    color: white !important;
+    font-size: 16px;
+    cursor: pointer;
+    padding: 10px 15px;
+    font-family: 'Georgia', sans-serif;
+    border-radius: 15px;
+    font-weight: bold;
+    width: 100px;
+    white-space: nowrap;
+}
+
+.backgroundContent h1 {
+    margin-bottom: 20px;
+    font-size: 3rem;
+}

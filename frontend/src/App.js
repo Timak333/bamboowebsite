@@ -8,6 +8,7 @@ import EcoCalculator from './Pages/EcoCalculator';
 import MosoBamboo from './Pages/MosoBamboo';
 import ResultsPage from './Pages/ResultsPage';
 import PreviousResults from './Pages/PreviousResults';
+import ViewGallery from './Pages/ViewGallery';
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
         <Route path="/About" element={<About />} />
         <Route path="/results" element={<ResultsPage />} />
         <Route path="/PreviousResults" element={<PreviousResults />} />
+        <Route path="/PreviousResults" element={<ViewGallery />} />
       </Routes>
     </Router>
   );

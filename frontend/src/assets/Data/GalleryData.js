@@ -1,4 +1,4 @@
-const galleryData = [
+const GalleryData = [
     {
         image: require('../Images/Image1.jpg'),
         imageNotes: "Bahareque buildings, a traditional construction method using wattle and daub, are often found in South America in regions with access to bamboo and other local materials.",
@@ -13,7 +13,7 @@ const galleryData = [
     },
     {
         image: require('../Images/Image4.jpg'),
-        imageNotes: "Bamboo Pavilion by Zuo Studio in Taiwan        "
+        imageNotes: "Bamboo Pavilion by Zuo Studio in Taiwan"
     },
     {
         image: require('../Images/Image5.jpg'),
@@ -68,7 +68,7 @@ const galleryData = [
         imageNotes: "Pagodas are architectural structures, primarily associated with Buddhism, found throughout East and Southeast Asia, including China, Japan, and Myanmar."
     },
     {
-        image: require('../Images/Image18.png'),
+        image: require('../Images/Image18.jpg'),
         imageNotes: "Sharma Springs by IBUKU in Indonesia"
     },
     {
@@ -100,3 +100,5 @@ const galleryData = [
         imageNotes: "Innhouse Eco Hotel by Oval Partnership in China"
     },
 ];
+
+export default GalleryData;
