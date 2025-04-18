@@ -5,6 +5,15 @@
     background-color: white;
     max-width: 100%;
     margin: auto;
+    margin-top: -50px;
+    z-index: 1;
+}
+
+.galleryContainer h1 {
+    font-size: 2.5rem;
+    font-family: 'Cormorant Garamond', sans-serif;
+    font-weight: bold;
+    margin-bottom: 20px;
 }
 
 .slick-slide {
@@ -23,9 +32,35 @@
 }
 
 .prevArrow {
-    left: -30px;
+    left: 50px;
 }
 
 .nextArrow {
-    right: -30px;
+    right: 50px;
+}
+
+.slick-dots {
+    position: static;
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+@media screen and (max-width: 768px) {
+    .galleryContainer {
+        padding: 60px 20px;
+    }
+
+    .nextArrow,
+    .prevArrow {
+        width: 28px;
+        height: 28px;
+        padding: 4px;
+    }
+    .prevArrow {
+        left: -2px;
+    }
+    .nextArrow {
+        right: -5px;
+    }
 }

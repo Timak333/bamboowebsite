@@ -33,14 +33,12 @@ tables_to_load = [
     {
         "sheet_name": "concrete_insitu",
         "table_name": "concrete_insitu",
-        "columns": ["Concrete Type","CEM I", "Portland Limestone", "Natural Pozzolanic Ash ",
-                    "Fly Ash 15%", "Fly Ash 30%", "Fly Ash 40%", "Blast Furnace Slag 25%", 
-                    "Blast Furnace Slag 50%", "Blast Furnace Slag 70%"]
+        "columns": ["Material Type", "Embodied Carbon kgCO2e/kg"]
     },
     {
         "sheet_name": "concrete_precast",
         "table_name": "concrete_precast",
-        "columns": ["Concrete Type", "Embodied Carbon kgCO2e/kg"]
+        "columns": ["Material Type", "Embodied Carbon kgCO2e/kg"]
     },
     {
         "sheet_name": "steel",

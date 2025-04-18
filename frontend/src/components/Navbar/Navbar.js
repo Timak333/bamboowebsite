@@ -16,7 +16,7 @@ const Navbar = () => {
     const hideLogoOnRoutes = ['/EcoCalculator', '/MosoBamboo', '/About', '/results'];
     const hideLogo = hideLogoOnRoutes.includes(location.pathname);
     //hide navbar for ecocalculator
-    const hideNavBarOnRoutes = ['/EcoCalculator','/results', '/PreviousResults'].includes(location.pathname);
+    const hideNavBarOnRoutes = ['/EcoCalculator','/results', '/PreviousResults', '/ViewGallery'].includes(location.pathname);
     if (hideNavBarOnRoutes) {
         return null;
     }
@@ -28,7 +28,7 @@ const Navbar = () => {
                     {isOpen ? <CloseIcon /> : <MenuIcon />}
                 </button>
             </div>
-           <nav className= {`navbar ${location.pathname === '/Gallery' ? 'galleryNavbar' : ''}`}>
+           <nav className= {`navbar ${['/Gallery'].includes(location.pathname) ? 'galleryNavbar' : ''}`}>
             
             {!hideLogo ? (
             <Link to="/"><img src={webLogo} alt="Logo" className="logo" /></Link>

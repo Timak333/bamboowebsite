@@ -94,11 +94,7 @@ const GalleryData = [
     {
         image: require('../Images/Image24.jpg'),
         imageNotes: "Wattle and daub is a composite building method in which a woven lattice of bamboo strips is covered with a mixture of clay or mud. It has been found in various regions, including Africa, Europe, Mesoamerica, and North America."
-    },
-    {
-        image: require('../Images/Image25.jpg'),
-        imageNotes: "Innhouse Eco Hotel by Oval Partnership in China"
-    },
+    }
 ];
 
 export default GalleryData;

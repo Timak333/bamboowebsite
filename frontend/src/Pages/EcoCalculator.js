@@ -197,7 +197,7 @@ const EcoCalculator = () => {
                                         <TextField {...params} label="Materials" variant="outlined"/>
                                     )}
                                     renderOption={(props, option) => (
-                                        <li {...props} key={option.material}>
+                                        <li {...props} key={option.id}>
                                             {option.material}
                                         </li>
                                     )}

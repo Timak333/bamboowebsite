@@ -9,13 +9,13 @@ import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 
 const NextArrow = ({ onClick }) => (
-    <div className="arrowNext" onClick={onClick}>
+    <div className="nextArrow" onClick={onClick}>
         <ArrowForwardIosIcon />
     </div>
 )
 
 const PrevArrow = ({ onClick }) => (
-    <div className="arrowPrev" onClick={onClick}>
+    <div className="prevArrow" onClick={onClick}>
         <ArrowBackIosIcon />
     </div>
 )
@@ -24,7 +24,9 @@ const ViewGallery = () => {
     const settings = {
         dots: true,
         infinite: true,
-        speed: 500,
+        speed: 600,
+        fade: true,
+        cssEase: 'ease-in-out',
         slidesToShow: 1,
         slidesToScroll: 1,
         nextArrow: <NextArrow />,
@@ -40,14 +42,14 @@ const ViewGallery = () => {
     };
 
     return (
-        <div className="galleryContainer">
-            <h1> Bamboo Gallery</h1>
-            <Slider {...settings}>
-                {GalleryData.map((item, index) => (
-                    <Flipcard key={index} image={item.image} imageNotes={item.imageNotes} />
-                ))}
-            </Slider>
-        </div>
+             <div className="galleryContainer">
+                <h1> Bamboo Gallery</h1>
+                <Slider {...settings}>
+                    {GalleryData.map((item, index) => (
+                        <Flipcard key={index} image={item.image} imageNotes={item.imageNotes} />
+                    ))}
+                </Slider>
+            </div>
     )
 }
 

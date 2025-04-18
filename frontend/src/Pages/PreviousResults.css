@@ -24,12 +24,15 @@
 }
 
 .calculationsList {
-    max-height: 70vh;
-    overflow-y: auto;
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
     padding: 10px;
+    overflow-x: auto;
 }
 
 .calculationCard {
+    flex: 0 0 280px;
     background: #ffffff;
     border-radius: 10px;
     padding: 15px;
