@@ -13,7 +13,7 @@ const Navbar = () => {
         setIsOpen(!isOpen);
     }
     //hide logo
-    const hideLogoOnRoutes = ['/EcoCalculator', '/MosoBamboo', '/About', '/results'];
+    const hideLogoOnRoutes = ['/EcoCalculator', '/MosoBamboo', '/results'];
     const hideLogo = hideLogoOnRoutes.includes(location.pathname);
     //hide navbar for ecocalculator
     const hideNavBarOnRoutes = ['/EcoCalculator','/results', '/PreviousResults', '/ViewGallery'].includes(location.pathname);
@@ -40,7 +40,6 @@ const Navbar = () => {
                 <Link to="/MosoBamboo">Moso Bamboo</Link>
                 <Link to="/Gallery">Gallery</Link>
                 <Link to="/EcoCalculator">EcoCalculator</Link>
-                <Link to="/About">About</Link>
                 </div>
             </nav>
             {/* Mobile navigation links */}
@@ -50,7 +49,6 @@ const Navbar = () => {
                     <Link to="/MosoBamboo" onClick={toggleNavBar}>Moso Bamboo</Link>
                     <Link to="/Gallery" onClick={toggleNavBar}>Gallery</Link>
                     <Link to="/EcoCalculator" onClick={toggleNavBar}>EcoCalculator</Link>
-                    <Link to="/About" onClick={toggleNavBar}>About</Link>
                 </div>
             )}
         </>
