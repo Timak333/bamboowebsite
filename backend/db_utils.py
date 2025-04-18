@@ -1,5 +1,18 @@
 import sqlite3
 
+#mapping display category to table name in database
+category_to_table = {
+    "Concrete In-Situ": "concrete_insitu",
+    "Concrete Precast": "concrete_precast",
+    "Timber" : "timber",
+    "Glass" : "glass",
+    "Ceramic" : "ceramic",
+    "Clay Brick" : "clay_brick",
+    "Plaster" : "plaster",
+    "Steel" : "steel",
+    "Vinyl" : "vinyl",
+    "Bamboo" : "bamboo",
+}
 #utility function to query database
 def query_database(query, params=()):
     conn = sqlite3.connect('database.db')
@@ -10,13 +23,19 @@ def query_database(query, params=()):
     return rows
 
 #function to get embodied carbon (kgCO₂e/kg) for a selected material
-def get_material_carbon(material_name, table_name):
+def get_material_carbon(material_name, category_name):
     conn = sqlite3.connect('database.db')
     cursor = conn.cursor()
+
+    table_name = category_to_table.get(category_name)
+    if not table_name:
+        print(f"Error: No table found for '{category_name}")
+        return 0
+    
     column_name = "Material Type" if "concrete" not in table_name else "Concrete Type"
     query = f"""
             SELECT "Embodied Carbon kgCO2e/kg"
-            FROM {table_name}
+            FROM "{table_name}"
             WHERE "{column_name}" = ?
         """
     cursor.execute(query, (material_name,))
