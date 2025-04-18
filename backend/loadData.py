@@ -33,12 +33,12 @@ tables_to_load = [
     {
         "sheet_name": "concrete_insitu",
         "table_name": "concrete_insitu",
-        "columns": ["Material Type", "Embodied Carbon kgCO2e/kg"]
+        "columns": ["Concrete Type", "Embodied Carbon kgCO2e/kg"]
     },
     {
         "sheet_name": "concrete_precast",
         "table_name": "concrete_precast",
-        "columns": ["Material Type", "Embodied Carbon kgCO2e/kg"]
+        "columns": ["Concrete Type", "Embodied Carbon kgCO2e/kg"]
     },
     {
         "sheet_name": "steel",

@@ -13,7 +13,7 @@ def query_database(query, params=()):
 def get_material_carbon(material_name, table_name):
     conn = sqlite3.connect('database.db')
     cursor = conn.cursor()
-    column_name = "Material Type"
+    column_name = "Material Type" if "concrete" not in table_name else "Concrete Type"
     query = f"""
             SELECT "Embodied Carbon kgCO2e/kg"
             FROM {table_name}

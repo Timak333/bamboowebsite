@@ -31,13 +31,13 @@ CREATE TABLE transportation_modes (
 
 CREATE TABLE concrete_insitu (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    "Material Type" TEXT NOT NULL,
+    "Concrete Type" TEXT NOT NULL,
     "Embodied Carbon kgCO2e/kg" REAL NOT NULL
 );
 
 CREATE TABLE concrete_precast (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    "Material Type" TEXT NOT NULL,
+    "Concrete Type" TEXT NOT NULL,
     "Embodied Carbon kgCO2e/kg" REAL NOT NULL
 );
 
