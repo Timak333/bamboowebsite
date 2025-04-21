@@ -16,7 +16,7 @@ const Navbar = () => {
     const hideLogoOnRoutes = ['/EcoCalculator', '/MosoBamboo', '/results'];
     const hideLogo = hideLogoOnRoutes.includes(location.pathname);
     //hide navbar for ecocalculator
-    const hideNavBarOnRoutes = ['/EcoCalculator','/results', '/PreviousResults', '/ViewGallery'].includes(location.pathname);
+    const hideNavBarOnRoutes = ['/EcoCalculator','/results', '/PreviousResults', '/ViewGallery', '/MosoBamboo'].includes(location.pathname);
     if (hideNavBarOnRoutes) {
         return null;
     }
