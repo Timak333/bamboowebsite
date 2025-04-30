@@ -19,5 +19,6 @@ This research and web development project explores how sustainable materials can
    ```
    cd backend
    source venv/bin/activate
+   pip install flask pandas openpyxl flask-cors
    python app.py
 
